@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calendar</title>
+  <script src="cachedApi.json"></script>
+  <script defer type="module" src="script.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <details id="circumstances" open>
+    <summary><h1>all form forms time / falls on the body</h1></summary>
+    <p>
+      a day of the year visualizer for are.na channels. 
+      it could be a loose mood tracker for seasonal shifts
+      or other yearly cycles, tracing paper for overlaying
+      journals, or a divinatory tool.
+      rosemary made this while reading kari edwards's <a href="https://poets.org/poem/obedience-clock-time" target="_blank">disobedience</a>. 
+      here is the place to start, with a channel url:
+    </p>
+    <form id="channel-picker">
+      <input type="url" 
+        required
+        name="channel" 
+        id="channel-url"
+        placeholder="https://are.na/neighbor/how-you-did-it" 
+        list="defaultURLs">
+      <datalist id="defaultURLs">
+        <option value="https://are.na/rosemary/how-i-did-it"></option>
+        <option value="https://are.na/leslie-liu/did-i-see-fireflies-today"></option>
+        <option value="https://are.na/shel/today-barqa_bk6eg"></option>
+        <option value="https://are.na/matthew-dowdy/how-ctruuxzpu1s"></option>
+        <option value="https://are.na/daniel-galis/energy-of-the-now"></option>
+        <option value="https://are.na/azulenas/how-i-did-it-995cxsscakq"></option>
+        <option value="https://are.na/alex-singh/friend-of-the-day"></option>
+        
+      </datalist>
+      <button id="channel-go">ask ➳</button>
+    </form>
+    <p id="status">
+      javascript is required
+    </p>
+    <form>
+      <label for="zoom-slider">zoom</label>
+      <input type="range" min="2" max="10" step=".3" value="3" id="zoom-slider">
+      <button type="button" onclick="location.reload()">erase</button>
+    </form>
+  </details>
+
+  <ol id="calendar-list"></ol>
+
+</body>
+</html>
