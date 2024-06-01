@@ -24,7 +24,7 @@ async function init() {
 }
 
 async function addDays(url) {
-    // const blocks = cachedResponse.contents
+    // const {message, blocks} = {message: 'ready to go', blocks: cachedResponse.contents}
     const {message, blocks} = url ? await getChannelPage(url) 
         : {message: 'ready to go', blocks: null}
 
@@ -62,7 +62,6 @@ async function clickDo(e) {
 
 function scaleGrid(e) {
     const zoomLevel = e.target.value
-    console.log('zoom', zoomLevel)
     calendarList.style = `--zoom: ${zoomLevel}rem`
 }
 

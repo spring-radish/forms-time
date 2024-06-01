@@ -1,8 +1,5 @@
 import {dayOfYear} from './day.js'
 
-const dateFormat = ([m, d]) => 
-    `${m}-${d}`
-
 function rangeArray(n) {
     return Array(n)
         .fill(0)
@@ -30,16 +27,6 @@ export const plainYear = new Map(months
         .map(d => [`${m}-${d}`, []])
     ).flat())
 
-// function monthList([monthIndex, dayArray]) {
-//     return dayArray.map(d =>
-//         `<li id=${monthIndex}.${d}></li>`)
-// }
-
-// export function yearList(year = plainYear) {
-//     return [...year]
-//         .map(([date, array]) => ``)
-// }
-
 
 export function intoYear(blocks, currentYear) {
     // console.log(year)
@@ -47,9 +34,10 @@ export function intoYear(blocks, currentYear) {
     if (blocks === null) return year
 
     blocks.forEach(block => {
-        const arrayDate = dayOfYear(block.title, block.connected_at, block.created_at)
-        const date = dateFormat(arrayDate)
+        const {month, day, fullyear} = dayOfYear(block.title, block.connected_at, block.created_at)
+        const date = `${month}-${day}`
         const pastArray = year.get(date) ?? []
+        block.fullyear = fullyear
         const nextArray = [...pastArray, block]
         year.set(date, nextArray)
     })
