@@ -1,5 +1,5 @@
 body { 
-  background: #404043; 
+  background: #434078; 
   margin: 0;
 }
 
@@ -7,9 +7,10 @@ p {
   margin: 0;
 }
 img {
-  height: 100%;
-  width: auto;
+  height: auto;
+  width: 70%;
   display: block;
+  margin-left: auto;
 }
 
 details {
@@ -30,8 +31,8 @@ details {
   }
 
   &[open] {
-    width: 40%;
-    min-width: 19rem;
+    max-width: 90%;
+    width: 25rem;
 
     & > * + * {
       border-top: var(--border);
@@ -93,8 +94,8 @@ h1 {
 
 #calendar-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--zoom, 3rem), 1fr));
-  gap: 1px;
+  grid-template-columns: repeat(auto-fit, minmax(var(--zoom, 4.2rem), 1fr));
+  gap: 1.5px;
   margin: 3px;
   padding: 0;
 
@@ -103,7 +104,7 @@ h1 {
     aspect-ratio: 1;
     overflow: hidden;
     scroll-margin-top: 5rem;
-    border: 1px solid #c8c8c8;
+    border: 1px solid #e5e4ff;
     background-color: color-mix(in lab, lavender, #7373d1 var(--saturation));
 
     &[id='2-29'] { border-style: dashed; }
@@ -147,11 +148,11 @@ h1 {
 /*      &.text { --color: #d46131 }*/
 }
 
-.attachment { --color: #d64585 }
+.attachment { --color: #d645b2 }
 .channel { --color: #68c668 }
 .image { --color: #a745e0 }
-.link { --color: #b1c93a }
-.media { --color: #9166cb }
+.link { --color: #a7be34 }
+.media { --color: #5f9ed6 }
 /*.text { --color: #7373d1 }*/
 
 .content {
@@ -163,13 +164,14 @@ h1 {
 
   --border: 1px solid #eee;
   position: fixed;
-  top: 10vh;
-  left: 10vw;
-  width: 80%;
+  top: 5vh;
+  left: 5vw;
+  width: 70ch;
+  max-width: 90%;
   max-height: 80%;
   border: var(--border);
   background: #d4d4f1;
-  overflow: scroll;
+  overflow-y: scroll;
 
   & > header {
     padding: 0;
@@ -200,9 +202,14 @@ h1 {
     display: flex;
     align-items: flex-start;
     gap: 6px;
+    overflow-x: scroll;
 
     &.image, &.attachment {
       justify-content: space-between;
+    }
+
+    & .words {
+      padding-top: 2px;
     }
 
     & a.block {

@@ -1,23 +1,23 @@
 function findTemplate(block) {
     switch (block.class) {
         case 'Text':
-            return `<div>${block.content_html}</div>`
+            return `<div class="words">${block.content_html}</div>`
         case 'Image':
-            return `<img src="${block.image.thumb.url}" alt="${block.title}">`
+            return `<img src="${block.image.thumb.url}" alt="${block.title}" loading="lazy">`
         case 'Link':
-            return `<a href="${block.source.url}" target="_blank">
-                ${block.title}
+            return `<a href="${block.source.url}" target="_blank" class="words">
+                ${block.title || block.source.title}
                 </a>`
         case 'Media':
-            return `<a href="${block.source.url}" target="_blank">
-                ${block.title}
+            return `<a href="${block.source.url}" target="_blank" class="words">
+                ${block.title || block.source.title}
                 </a>`
         case 'Attachment':
             return `<a href="${block.attachment.url}" target="_blank">
                 <img src="${block.image.thumb.url}" alt="${block.title}">
                 </a>`
         case 'Channel':
-            return `<a href="//are.na/${block.user.slug}/${block.slug}" target="_blank">
+            return `<a href="//are.na/${block.user.slug}/${block.slug}" target="_blank" class="words">
                 ${block.title} by ${block.user.full_name}
                 </a>`
     }

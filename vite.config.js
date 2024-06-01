@@ -1,8 +1,6 @@
 export default {
   css: {
-    transformer: 'lightningcss',
-    lightningcss: {
-    }
+    transformer: 'lightningcss'
   },
   build: {
     cssMinify: 'lightningcss'
