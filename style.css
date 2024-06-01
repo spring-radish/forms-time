@@ -99,6 +99,7 @@ h1 {
   padding: 0;
 
   & li {
+    display: block;
     aspect-ratio: 1;
     overflow: hidden;
     scroll-margin-top: 5rem;
@@ -124,13 +125,21 @@ h1 {
   [id^='4-'], [id^='8-'] { --saturation: 34% }
   [id^='5-'],[id^='7-'] { --saturation: 27% }
   [id^='6-'] { --saturation: 22% }
+
+  [id^='12-'] { background-color: color-mix(in lab, lavender, #7373d1 60%) }
+  [id^='1-'], [id^='11-'] { background-color: color-mix(in lab, lavender, #7373d1 53%) }
+  [id^='2-'], [id^='10-'] { background-color: color-mix(in lab, lavender, #7373d1 46%) }
+  [id^='3-'], [id^='9-'] { background-color: color-mix(in lab, lavender, #7373d1 40%) }
+  [id^='4-'], [id^='8-'] { background-color: color-mix(in lab, lavender, #7373d1 34%) }
+  [id^='5-'],[id^='7-'] { background-color: color-mix(in lab, lavender, #7373d1 27%) }
+  [id^='6-'] { background-color: color-mix(in lab, lavender, #7373d1 22%) }
 }
 
 .preview {
   flex: 1 1 auto;
   --color: #7373d1;
   --lighter: color-mix(in lab, var(--color) 75%, #eee);
-  background: linear-gradient(to top, var(--color), var(--lighter, #eee 400%));
+  background: linear-gradient(to top, var(--color), #eee 400%);
 
 /*      li:nth-child(even) &:nth-child(even) {
     background: linear-gradient(to bottom, var(--color), var(--lighter));
@@ -172,7 +181,7 @@ h1 {
     top: 0;
 
     & > * {
-      padding: .5rem;
+      padding: .75rem;
     }
     & a {
       border-left: var(--border);
