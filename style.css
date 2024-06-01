@@ -168,7 +168,7 @@ h1 {
   left: 5vw;
   width: 70ch;
   max-width: 90%;
-  max-height: 80%;
+  max-height: 80lvh;
   border: var(--border);
   background: #d4d4f1;
   overflow-y: scroll;
