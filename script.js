@@ -1,6 +1,7 @@
 import { getChannelPage } from './modules/api.js'
 import { intoYear } from './modules/year.js'
 import { renderDay } from './modules/blocks.js'
+import cachedResponse from './cachedApi.json' assert {type: 'json'}
 
 
 
