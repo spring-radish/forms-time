@@ -13,8 +13,12 @@ function findTemplate(block) {
                 ${block.title || block.source.title}
                 </a>`
         case 'Attachment':
-            return `<a href="${block.attachment.url}" target="_blank">
+            if (block.image) 
+                return `<a href="${block.attachment.url}" target="_blank">
                 <img src="${block.image.thumb.url}" alt="${block.title}">
+                </a>`
+            else return `<a href="${block.attachment.url}" target="_blank">
+                ${block.title}
                 </a>`
         case 'Channel':
             return `<a href="//are.na/${block.user.slug}/${block.slug}" target="_blank" class="words">
