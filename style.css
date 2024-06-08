@@ -200,22 +200,21 @@ h1 {
 .media { --color: #5f9ed6 }
 
 body:has([value="years"]:checked) {
-  .year-2009 { --color: #1F2883 }
-  .year-2010 { --color: #302280 }
-  .year-2011 { --color: #46267C }
-  .year-2012 { --color: #5A2979 }
-  .year-2013 { --color: #6A2D75 }
-  .year-2014 { --color: #6F3786 }
-  .year-2015 { --color: #724197 }
-  .year-2016 { --color: #734DA6 }
-  .year-2017 { --color: #7359B5 }
-  .year-2018 { --color: #7366C4 }
-  .year-2019 { --color: #9574DA }
-  .year-2020 { --color: #BB75E2 }
-  .year-2021 { --color: #E578E9 }
-  .year-2022 { --color: #F07BCE }
-  .year-2023 { --color: #F67EAD }
-  .year-2024 { --color: #FB838B }
+  .year-2011 { --color: #48921f }
+  .year-2012 { --color: #31A53F }
+  .year-2013 { --color: #38AB6D }
+  .year-2014 { --color: #41B19A }
+  .year-2015 { --color: #49A8B7 }
+  .year-2016 { --color: #5A90C0 }
+  .year-2017 { --color: #6073C2 }
+  .year-2018 { --color: #7366c4 }
+  .year-2019 { --color: #9169CA }
+  .year-2020 { --color: #B16CD0 }
+  .year-2021 { --color: #D36FD6 }
+  .year-2022 { --color: #DB72C0 }
+  .year-2023 { --color: #E076A8 }
+  .year-2024 { --color: #E47B8F }
+  .year-2025 { --color: #E9887F }
 }
 /*.text { --color: #7373d1 }*/
 
