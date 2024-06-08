@@ -5,12 +5,15 @@ const userpageRoutes = ['channels', 'blocks', 'table', 'index', 'all']
 
 export async function getChannelPage(input) {
     const path = input    // e.g. 'https://www.are.na/elliott-cost/model-sites/'
-        .split('are.na')[1]     // '/elliott-cost/model-sites/'
+        .split('are.na')
+        .at(-1)                 // '/elliott-cost/model-sites/'
         .split('/')             // [ "", "elliott-cost", "model-sites", "" ]
         .filter(s => s.length)  // ["elliott-cost", "model-sites"]
 
+    console.log(path)
+
     let requestFunction = sendChannelRequest
-    let slug = path[1]
+    let slug = path.at(-1)
 
     if (path.length === 2 && userpageRoutes.includes(path[1])) {
         requestFunction = sendUserRequest
