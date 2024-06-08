@@ -200,6 +200,10 @@ h1 {
 .media { --color: #5f9ed6 }
 
 body:has([value="years"]:checked) {
+  .year-2009 { --color: #1F2883 }
+  .year-2010 { --color: #302280 }
+  .year-2011 { --color: #46267C }
+  .year-2012 { --color: #5A2979 }
   .year-2013 { --color: #6A2D75 }
   .year-2014 { --color: #6F3786 }
   .year-2015 { --color: #724197 }
