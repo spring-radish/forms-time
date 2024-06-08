@@ -5,6 +5,7 @@ body {
 
 p {
   margin: 0;
+  line-height: 1.2;
 }
 img {
   height: auto;
@@ -92,6 +93,50 @@ h1 {
   font-style: italic;
 }
 
+.legends {
+  display: flex;
+
+  form {
+    flex-direction: column;
+    border-right: var(--border);
+  }
+  label {
+    cursor: pointer;
+  }
+  label:has(:checked) {
+    background: #e6e6ff;
+  }
+  input[type="radio"] {
+    display: none;
+  }
+  ul {
+    display: flex;
+    list-style: none;
+    padding: .5rem;
+    margin: 0;
+    gap: 5px 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+  }
+  li::before {
+    content: '';
+    display: inline-block;
+    height: 1.2em;
+    aspect-ratio: 1;
+    margin-right: 5px;
+    background: linear-gradient(to top, var(--color, #7373d1), #eee 400%);
+    vertical-align: text-bottom;
+  }
+  form:has([value="years"]:checked) ~ #types-legend {
+    display: none;
+  }
+  form:has([value="types"]:checked) ~ #years-legend {
+    display: none;
+  }
+}
+
 #calendar-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--zoom, 4.2rem), 1fr));
@@ -153,6 +198,21 @@ h1 {
 .image { --color: #a745e0 }
 .link { --color: #a7be34 }
 .media { --color: #5f9ed6 }
+
+body:has([value="years"]:checked) {
+  .year-2013 { --color: #6A2D75 }
+  .year-2014 { --color: #6F3786 }
+  .year-2015 { --color: #724197 }
+  .year-2016 { --color: #734DA6 }
+  .year-2017 { --color: #7359B5 }
+  .year-2018 { --color: #7366C4 }
+  .year-2019 { --color: #9574DA }
+  .year-2020 { --color: #BB75E2 }
+  .year-2021 { --color: #E578E9 }
+  .year-2022 { --color: #F07BCE }
+  .year-2023 { --color: #F67EAD }
+  .year-2024 { --color: #FB838B }
+}
 /*.text { --color: #7373d1 }*/
 
 .content {
@@ -228,3 +288,4 @@ h1 {
     border-bottom: var(--border);
   } 
 }
+

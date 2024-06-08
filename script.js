@@ -10,6 +10,7 @@ const channelGo = document.getElementById('channel-go')
 const status = document.getElementById('status')
 const calendarList = document.getElementById('calendar-list')
 const zoomSlider = document.getElementById('zoom-slider')
+const yearsLegend = document.getElementById('years-legend')
 
 
 let BIGCAL = null
@@ -29,15 +30,21 @@ async function addDays(url) {
         : {message: 'ready to go', blocks: null}
 
     console.log('message', message)
+    console.log(blocks)
 
-    const thisYear = intoYear(blocks, BIGCAL)
-    const yearHtml = [...thisYear]
+    const year = intoYear(blocks, BIGCAL)
+    const yearHtml = [...year.days]
         .map(([date, blocks]) =>
             renderDay(blocks, date))
         .join(' ')
 
     calendarList.innerHTML = yearHtml
-    BIGCAL = thisYear
+    BIGCAL = year
+    console.log(year.info)
+    yearsLegend.innerHTML = [...year.info.yearsRepresented]
+        .sort()
+        .map(y => `<li class='year-${y}'>${y}</li>`)
+        .join(' ')
 
     return message
 }

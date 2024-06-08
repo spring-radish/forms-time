@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <details id="circumstances">
+  <details open id="circumstances">
     <summary><h1>all form forms time / falls on the body</h1></summary>
     <p>
       a day of the year visualizer for are.na channels (read:
@@ -29,6 +29,23 @@
     <p id="status">
       javascript is required
     </p>
+    <div class="legends">
+      <form>
+        <label>types<input type="radio" name="legend" value="types" checked></label>
+        <label>years<input type="radio" name="legend" value="years"></label>
+      </form>
+      <ul id="types-legend">
+        <li class="text">text</li>
+        <li class="attachment">attachment</li>
+        <li class="channel">channel</li>
+        <li class="image">image</li>
+        <li class="link">link</li>
+        <li class="media">media</li>
+      </ul>
+      <ul id="years-legend">
+        <li>add a channel to count years</li>
+      </ul>
+    </div>
     <form>
       <label for="zoom-slider">zoom</label>
       <input type="range" min="2" max="10.1" step=".3" value="4.2" id="zoom-slider">

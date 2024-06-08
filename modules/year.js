@@ -21,26 +21,36 @@ const months = [
     [12, 31]
 ]
 
-export const plainYear = new Map(months
+const base = new Map(months
     .map(([m, dn]) => 
         rangeArray(dn)
         .map(d => [`${m}-${d}`, []])
     ).flat())
 
+const plainYear = {
+    days: base,
+    info: {
+        yearsRepresented: new Set()
+    }
+}
+
 
 export function intoYear(blocks, currentYear) {
-    // console.log(year)
     const year = currentYear || plainYear
     if (blocks === null) return year
+
+    const {days, info} = year
+    // console.log(year)
 
     blocks.forEach(block => {
         const {month, day, fullyear} = dayOfYear(block.title, block.connected_at, block.created_at)
         const date = `${month}-${day}`
-        const pastArray = year.get(date) ?? []
+        const pastArray = days.get(date) ?? []
         block.fullyear = fullyear
         const nextArray = [...pastArray, block]
-        year.set(date, nextArray)
+        days.set(date, nextArray)
+        info.yearsRepresented.add(fullyear)
     })
 
-    return year
+    return {days, info}
 }

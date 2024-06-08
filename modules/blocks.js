@@ -29,12 +29,12 @@ export function renderDay(blocks, date) {
     blocks.sort((a, b) => a.fullyear - b.fullyear)
 
     const previewInner = blocks.map(block => 
-        `<div class='preview ${block.class.toLowerCase()}'></div>`)
+        `<div class="preview ${block.class.toLowerCase()} year-${block.fullyear}"></div>`)
         .join('')
     const preview = `<a href="#inner-${date}">${previewInner}</a>`
 
     const articleInner = blocks.map(block =>
-        `<section class="${block.class.toLowerCase()}">
+        `<section class="${block.class.toLowerCase()} year-${block.fullyear}">
             <a class="block" href="//are.na/block/${block.id}" target="_blank">${block.fullyear}</a> 
             ${findTemplate(block)}
         </section>`)
