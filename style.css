@@ -102,9 +102,11 @@ h1 {
   }
   label {
     cursor: pointer;
-  }
-  label:has(:checked) {
-    background: #e6e6ff;
+    flex: 1 1 auto;
+
+    &:hover, &:focus, &:has(:checked) {
+      background: #e6e6ff;
+    }
   }
   input[type="radio"] {
     display: none;
@@ -119,6 +121,7 @@ h1 {
     justify-content: center;
     align-items: center;
     flex-grow: 1;
+    font-size: .9em;
   }
   li::before {
     content: '';
