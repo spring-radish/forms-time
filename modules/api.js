@@ -1,10 +1,23 @@
 let requestHistory = new Map()
 // slug -> [{page: 1, status: ok}]
 
+const userpageRoutes = ['channels', 'blocks', 'table', 'index', 'all']
+
 export async function getChannelPage(input) {
-    const slug = input
-        .split('/')
-        .findLast(s => s.length)
+    const path = input    // e.g. 'https://www.are.na/elliott-cost/model-sites/'
+        .split('are.na')[1]     // '/elliott-cost/model-sites/'
+        .split('/')             // [ "", "elliott-cost", "model-sites", "" ]
+        .filter(s => s.length)  // ["elliott-cost", "model-sites"]
+
+    let requestFunction = sendChannelRequest
+    let slug = path[1]
+
+    if (path.length === 2 && userpageRoutes.includes(path[1])) {
+        requestFunction = sendUserRequest
+        slug = path[0]
+    } else if (path.length === 2 && path[0] === 'block') {
+        requestFunction = sendBlockRequest
+    }
 
     let page = 1
     const slugHistory = requestHistory.get(slug) || []
@@ -19,7 +32,7 @@ export async function getChannelPage(input) {
     }
 
     try {
-        const response = await sendRequest(slug, page)
+        const response = await sendChannelRequest(slug, page)
 
         // console.log(response)
         const latestHistory = (response.contents.length === 100) 
@@ -36,7 +49,7 @@ export async function getChannelPage(input) {
     }
 }
 
-async function sendRequest(slug, page = 1) {
+async function sendChannelRequest(slug, page = 1) {
     const url = 'https://api.are.na/v2/channels/' + slug 
               + '/contents'
               + '?per=' + 100
@@ -51,4 +64,12 @@ async function sendRequest(slug, page = 1) {
 
     const channel = await response.json()
     return channel
+}
+
+async function sendBlockRequest() {
+    // https://api.are.na/v2/blocks/8693/channels
+}
+
+async function sendUserRequest() {
+    // https://api.are.na/v2/search/users/shea?subject=block&sort=created_at
 }
