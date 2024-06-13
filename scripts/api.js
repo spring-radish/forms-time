@@ -1,43 +1,45 @@
 const requestHistory = {
     channels: new Map(),
     users: new Map(),
-    blocks: new Map(),
+    // blocks: new Map(),
 }
 
 export async function dispatchUrl(input) {
-    const userpageRoutes = ['channels', 'blocks', 'table', 'index', 'all']
+    const viewRoutes = ['channels', 'blocks', 'table', 'index', 'all']
 
-    const path = input    // e.g. 'https://www.are.na/elliott-cost/model-sites/'
-        .split('are.na')        // -> ['https://www.', '/elliott-cost/model-sites/']
-        .at(-1)                 // -> '/elliott-cost/model-sites/'
-        .split('/')             // -> ["", "elliott-cost", "model-sites", ""]
-        .filter(s => s.length)  // -> ["elliott-cost", "model-sites"]
+    const path = input                // e.g. 'https://www.are.na/elliott-cost/model-sites/table/'
+        .split('are.na')                      // -> ['https://www.', '/elliott-cost/model-sites/table/']
+        .at(-1)                               // -> '/elliott-cost/model-sites/table/'
+        .split('/')                           // -> ["", "elliott-cost", "model-sites", "table", ""]
+        .filter(s => s.length)                // -> ["elliott-cost", "model-sites", "table"]
+        .filter(s => !viewRoutes.includes(s)) // -> ["elliott-cost", "model-sites"]
 
     console.log(path)
+    const slug = path.at(-1)
 
-    switch (true) {
-        case (path.length === 0):
-            return requestEmpty()
-        case (path.length === 2 && userpageRoutes.includes(path[1])):
-            return requestUser(path[0])
-        case (path.length === 2 && path[0] === 'block'):
-            // return requestBlock(path.at(-1))
+    if (path[0] === 'block') return requestBlock()
+
+    switch (path.length) {
+        case 1:
+            return requestUser(slug)
+        case 2:
+            return requestChannel(slug)
         default:
-            return requestChannel(path.at(-1))
+            return requestEmpty()
     }
 }
 
 
-function requestEmpty() {
+export function requestEmpty() {
     return {
-        message: "don't recognize this url... try copying directly from the address bar", 
+        message: "don't recognize this url... try copying from the address bar of a channel or user page", 
         blocks: null
     }
 }
 
 
 
-async function requestChannel(slug) {
+export async function requestChannel(slug) {
     const sendChannelRequest = async function (slug, page = 1) {
         const url = 'https://api.are.na/v2/channels/' + slug 
                   + '/contents'
@@ -76,7 +78,7 @@ async function requestChannel(slug) {
 }
 
 
-async function requestUser(slug) {
+export async function requestUser(slug) {
     const sendUserRequest = async function (slug, page = 1) {
         const url = 'https://api.are.na/v2/search/users/' + slug 
                   + '?subject=block'
@@ -115,43 +117,10 @@ async function requestUser(slug) {
 }
 
 
-// todo: how to get connected_at date?
-async function requestBlock(slug) {
-    const sendBlockRequest = async function (slug) {
-        const url = 'https://api.are.na/v2/blocks/' + slug
-        
-        console.log('requesting all connections')
-
-        const response = await fetch(url)
-        if (!response.ok) throw new Error(`http error: ${response.status}`)
-
-        const block = await response.json()
-        return block.connections
-    }
-
-    try {
-        const slugHistory = requestHistory.blocks.get(slug) || []
-        const page = pickPage(slugHistory)
-        const response = await sendBlockRequest(slug)
-
-        console.log(response)
-        const latestHistory = {page: page, status: 'end'}
-
-        requestHistory.blocks.set(slug, [...slugHistory, latestHistory])
-        console.log(requestHistory)
-
-        const blockTitle = response.title || response.source?.title || response.generated_title
-        const blockId = response.id
-
-        const connectionsAsBlocks = response.map(connection => {
-            connection.block_title = blockTitle
-            connection.block_id = blockId
-        })
-
-        return {message: `added block ${slug}'s connections`, blocks: connectionsAsBlocks}
-    }
-    catch (exception) {
-        return {message: exception.message, blocks: null}
+function requestBlock() {
+    return {
+        message: 'i can’t show blocks... yet. if you know how to get all the connection dates for a block, hit my line', 
+        blocks: null
     }
 }
 
