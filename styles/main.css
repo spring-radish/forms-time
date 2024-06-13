@@ -6,6 +6,9 @@ body {
 p {
   margin: 0;
   line-height: 1.2;
+  + p {
+    margin-top: .5em;
+  }
 }
 img {
   height: auto;
@@ -27,8 +30,13 @@ details {
     padding: .5rem;     
   }
 
-  p {
+  & > p, #info {
     padding: .5rem;
+  }
+
+  #info {
+    max-height: 8rem;
+    overflow-y: scroll;
   }
 
   &[open] {
