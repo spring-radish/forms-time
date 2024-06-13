@@ -14,5 +14,5 @@ pnpm run dev
 - [ ] autofill channel from query parameter
 - [ ] local date formatting
 - [ ] all dates relative to local timezone
-- [ ] color by year
+- [x] color by year
 - [ ] arrange in months
