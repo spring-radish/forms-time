@@ -6,7 +6,6 @@
         "YY-MM-DD",
         "YYYY-MM-DD",
         "M/D/YY",
-        "MM/D/YY",
-        "M/DD/YY",
+        "M/D",
     ]
 }

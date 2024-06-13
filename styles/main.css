@@ -156,6 +156,7 @@ h1 {
     background-color: color-mix(in lab, lavender, #7373d1 var(--saturation));
 
     &[id='2-29'] { border-style: dashed; }
+    &.today { border-style: double; border-width: 3px; }
     &:target { border: 2px solid #555; }
 
     & > a {

@@ -1,6 +1,6 @@
-import { dispatchUrl } from './modules/api.js'
-import { intoYear } from './modules/year.js'
-import { renderDay } from './modules/blocks.js'
+import { dispatchUrl } from './api.js'
+import { intoYear } from './year.js'
+import { renderDay } from './blocks.js'
 import cachedResponse from './cachedApi.json' assert {type: 'json'}
 
 
@@ -23,6 +23,13 @@ async function init() {
     zoomSlider.addEventListener('input', scaleGrid)
     const message = await addDays(null)
     status.innerText = message
+}
+
+function todaysId() {
+    const today = new Date()
+    const month = today.getMonth() + 1
+    const day = today.getDate()
+    return `li[id="${month}-${day}"] {border: 3px double inherit}`
 }
 
 async function addDays(url) {
