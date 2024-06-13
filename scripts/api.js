@@ -30,7 +30,7 @@ export async function dispatchUrl(input) {
 }
 
 
-export function requestEmpty() {
+function requestEmpty() {
     return {
         message: "don't recognize this url... try copying from the address bar of a channel or user page", 
         blocks: null
@@ -39,7 +39,7 @@ export function requestEmpty() {
 
 
 
-export async function requestChannel(slug) {
+async function requestChannel(slug) {
     const sendChannelRequest = async function (slug, page = 1) {
         const url = 'https://api.are.na/v2/channels/' + slug 
                   + '/contents'
@@ -78,7 +78,7 @@ export async function requestChannel(slug) {
 }
 
 
-export async function requestUser(slug) {
+async function requestUser(slug) {
     const sendUserRequest = async function (slug, page = 1) {
         const url = 'https://api.are.na/v2/search/users/' + slug 
                   + '?subject=block'

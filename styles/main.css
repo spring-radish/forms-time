@@ -156,7 +156,7 @@ h1 {
 #calendar-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--zoom, 4.2rem), 1fr));
-  gap: 1.5px;
+  gap: 1px;
   margin: 0 auto;
   padding: 3px;
 
