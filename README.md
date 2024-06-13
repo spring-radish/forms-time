@@ -5,6 +5,7 @@ pnpm run dev
 ```
 
 *possible todo*
+- [x] get all blocks by user
 - [ ] keyboard shortcuts
 - [ ] color schemes
 - [ ] get channel datalist from superchannel

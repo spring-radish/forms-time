@@ -1,4 +1,4 @@
-import { getChannelPage } from './modules/api.js'
+import { dispatchUrl } from './modules/api.js'
 import { intoYear } from './modules/year.js'
 import { renderDay } from './modules/blocks.js'
 import cachedResponse from './cachedApi.json' assert {type: 'json'}
@@ -27,7 +27,7 @@ async function init() {
 
 async function addDays(url) {
     // const {message, blocks} = {message: 'ready to go', blocks: cachedResponse.contents}
-    const {message, blocks} = url ? await getChannelPage(url) 
+    const {message, blocks} = url ? await dispatchUrl(url) 
         : {message: 'ready to go', blocks: null}
 
     console.log('message', message)
@@ -48,6 +48,10 @@ async function addDays(url) {
         .join(' ')
 
     return message
+}
+
+function makeColor(year) {
+
 }
 
 async function clickDo(e) {

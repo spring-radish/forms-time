@@ -3,7 +3,13 @@ function findTemplate(block) {
         case 'Text':
             return `<div class="words">${block.content_html}</div>`
         case 'Image':
-            return `<img src="${block.image.thumb.url}" alt="${block.title}" loading="lazy">`
+            if (block.image) {
+                return `<img src="${block.image.thumb.url}" alt="${block.generated_title}" loading="lazy">`
+            } else {
+                return `<a href="//are.na/block/${block.id}" target="_blank" class="words">
+                ${block.generated_title}
+                </a>`
+            }
         case 'Link':
             return `<a href="${block.source.url}" target="_blank" class="words">
                 ${block.title || block.source.title}
@@ -13,16 +19,26 @@ function findTemplate(block) {
                 ${block.title || block.source.title}
                 </a>`
         case 'Attachment':
-            if (block.image) 
+            if (block.image) {
                 return `<a href="${block.attachment.url}" target="_blank">
-                <img src="${block.image.thumb.url}" alt="${block.title}">
+                <img src="${block.image.thumb.url}" alt="${block.generated_title}">
                 </a>`
-            else return `<a href="${block.attachment.url}" target="_blank">
+            } else {
+                return `<a href="${block.attachment.url}" target="_blank">
                 ${block.title}
                 </a>`
+            }
         case 'Channel':
             return `<a href="//are.na/${block.user.slug}/${block.slug}" target="_blank" class="words">
                 ${block.title} by ${block.user.full_name}
+                </a>`
+        case 'Connection':
+            return `<a href=//are.na/block/${block.block_id} target="_blank">
+                ${block.block_title}
+                </a> 
+                →
+                <a href=//are.na/channel/${id} target="_blank">
+                ${block.title}
                 </a>`
     }
 }
