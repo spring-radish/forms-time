@@ -1,0 +1,12 @@
+{
+    "dateFormats": [
+        "mmmm DD, YYYY",
+        "DD mmmm, YYYY",
+        "MM/DD/YY",
+        "YY-MM-DD",
+        "YYYY-MM-DD",
+        "M/D/YY",
+        "MM/D/YY",
+        "M/DD/YY",
+    ]
+}
