@@ -15,4 +15,4 @@ pnpm run dev
 - [ ] local date formatting
 - [ ] all dates relative to local timezone
 - [x] color by year
-- [ ] arrange in months
+- [x] arrange in months

@@ -15,6 +15,8 @@
       <p><em>dedicated to <a href="https://poets.org/poem/obedience-clock-time" target="_blank">kari edwards</a> &lt;3</em></p>
       <p>enter channel or user urls to see their blocks arranged by day. all years are layered on top of each other, to surface seasonal cycles between january and december. the tool supports diary channels by preferring dates that appear in a block’s title, followed by date connected and date created.</p>
       <p>feel free to browse and open pull requests at the <a href="https://github.com/sprig-star/forms-time" target="_blank">source</a>.</p>
+      <p>with love,<br> 
+        <a href="//are.na/rosemary" target="_blank">rosemary</a></p>
     </div>
     <form id="channel-picker">
       <input type="text" 
@@ -29,8 +31,8 @@
     </p>
     <div class="legends">
       <form>
-        <label>types<input type="radio" name="legend" value="types" checked></label>
-        <label>years<input type="radio" name="legend" value="years"></label>
+        <label class="toggle">types<input type="radio" name="legend" value="types" checked></label>
+        <label class="toggle">years<input type="radio" name="legend" value="years"></label>
       </form>
       <ul id="types-legend">
         <li class="text">text</li>
@@ -45,6 +47,7 @@
       </ul>
     </div>
     <form>
+      <label class="toggle">months<input type="checkbox" value="months"></label>
       <label for="zoom-slider">zoom</label>
       <input type="range" min="2" max="10.1" step=".3" value="4.2" id="zoom-slider">
       <button type="button" onclick="location.reload()">erase</button>
