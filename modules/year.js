@@ -30,7 +30,8 @@ const base = new Map(months
 const plainYear = {
     days: base,
     info: {
-        yearsRepresented: new Set()
+        yearsRepresented: new Set(),
+        blockIds: new Set()
     }
 }
 
@@ -42,15 +43,19 @@ export function intoYear(blocks, currentYear) {
     const {days, info} = year
     // console.log(year)
 
-    blocks.forEach(block => {
-        const {month, day, fullyear} = dayOfYear(block.title, block.connected_at, block.created_at)
-        const date = `${month}-${day}`
-        const pastArray = days.get(date) ?? []
-        block.fullyear = fullyear
-        const nextArray = [...pastArray, block]
-        days.set(date, nextArray)
-        info.yearsRepresented.add(fullyear)
-    })
+    blocks.filter(block => 
+            !info.blockIds.has(block.id)
+        )
+        .forEach(block => {
+            const {month, day, fullyear} = dayOfYear(block.title, block.connected_at, block.created_at)
+            const date = `${month}-${day}`
+            const pastArray = days.get(date) ?? []
+            block.fullyear = fullyear
+            const nextArray = [...pastArray, block]
+            days.set(date, nextArray)
+            info.yearsRepresented.add(fullyear)
+            info.blockIds.add(block.id)
+        })
 
     return {days, info}
 }
