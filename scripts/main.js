@@ -1,6 +1,7 @@
 import { dispatchUrl } from './api.js'
 import { intoYear } from './year.js'
 import { renderDay } from './blocks.js'
+import { blocksToYear } from './timestructures.js'
 import cachedResponse from './cachedApi.json' assert {type: 'json'}
 
 
@@ -18,11 +19,11 @@ let BIGCAL = null
 
 
 
-async function init() {
+function init() {
     channelPicker.addEventListener('submit', clickDo)
     zoomSlider.addEventListener('input', scaleGrid)
-    const message = await addDays(null)
-    status.innerText = message
+    // const message = await addDays(null)
+    // status.innerText = message
 }
 
 function todaysId() {
@@ -33,26 +34,19 @@ function todaysId() {
 }
 
 async function addDays(url) {
-    // const {message, blocks} = {message: 'ready to go', blocks: cachedResponse.contents}
-    const {message, blocks} = url ? await dispatchUrl(url) 
-        : {message: 'ready to go', blocks: null}
+    const {message, blocks} = {message: 'ready to go', blocks: cachedResponse.contents}
+    // const {message, blocks} = url ? await dispatchUrl(url) 
+    //     : {message: 'ready to go', blocks: null}
 
     console.log('message', message)
     console.log(blocks)
 
-    const year = intoYear(blocks, BIGCAL)
-    const yearHtml = [...year.days]
-        .map(([date, blocks]) =>
-            renderDay(blocks, date))
-        .join(' ')
-
-    calendarList.innerHTML = yearHtml
-    BIGCAL = year
-    console.log(year.info)
-    yearsLegend.innerHTML = [...year.info.yearsRepresented]
-        .sort()
-        .map(y => `<li class='year-${y}'>${y}</li>`)
-        .join(' ')
+    const newDays = blocksToYear(blocks)
+    
+    for (const [date, blocks] of newDays) {
+        const li = document.getElementById(date)
+        li.style.background = 'pink'
+    }
 
     return message
 }
