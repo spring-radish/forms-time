@@ -1,3 +1,5 @@
+// tally
+
 import { dispatchUrl } from './api.js'
 import { intoYear } from './year.js'
 import { renderDay } from './blocks.js'
@@ -46,7 +48,13 @@ async function addDays(url) {
             renderDay(blocks, date))
         .join(' ')
 
-    calendarList.innerHTML = yearHtml
+    if (!document.startViewTransition) {
+        calendarList.innerHTML = yearHtml
+    } else {
+        document.startViewTransition(() => {calendarList.innerHTML = yearHtml});
+    }
+    
+
     BIGCAL = year
     console.log(year.info)
     yearsLegend.innerHTML = [...year.info.yearsRepresented]
