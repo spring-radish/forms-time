@@ -14,6 +14,8 @@ const status = document.getElementById('status')
 const calendarList = document.getElementById('calendar-list')
 const zoomSlider = document.getElementById('zoom-slider')
 const yearsLegend = document.getElementById('years-legend')
+const booksDatalist = document.getElementById('books')
+const inStyle = document.querySelector('style')
 
 
 let BIGCAL = null
@@ -23,16 +25,17 @@ let BIGCAL = null
 async function init() {
     channelPicker.addEventListener('submit', clickDo)
     zoomSlider.addEventListener('input', scaleGrid)
-
     const message = await addDays(null)
     status.innerText = message
+    // books.innerHTML = await getSuggestions('https://www.are.na/rosemary/how-i-did-it')
+    inStyle.sheet.insertRule(todaysId())
 }
 
 function todaysId() {
     const today = new Date()
     const month = today.getMonth() + 1
     const day = today.getDate()
-    return `li[id="${month}-${day}"] {border: 3px double inherit}`
+    return `#calendar-list [id="${month}-${day}"] {border: 3px double #eee}`
 }
 
 async function addDays(url) {
