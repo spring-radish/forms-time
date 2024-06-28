@@ -23,6 +23,7 @@ let BIGCAL = null
 async function init() {
     channelPicker.addEventListener('submit', clickDo)
     zoomSlider.addEventListener('input', scaleGrid)
+
     const message = await addDays(null)
     status.innerText = message
 }
