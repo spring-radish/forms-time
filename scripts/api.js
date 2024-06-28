@@ -63,7 +63,7 @@ async function requestChannel(slug) {
         const response = await sendChannelRequest(slug, page)
 
         console.log(response)
-        const latestHistory = (response.length < 0) 
+        const latestHistory = (response.length > 0) 
             ? {page: page}
             : {page: page, status: 'end'}
 
