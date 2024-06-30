@@ -35,7 +35,7 @@ function todaysId() {
     const today = new Date()
     const month = today.getMonth() + 1
     const day = today.getDate()
-    return `#calendar-list [id="${month}-${day}"] {border: 3px double #eee}`
+    return `#calendar-list [id="${month}-${day}"] {border: 3px double #e5e4ff}`
 }
 
 async function addDays(url) {
