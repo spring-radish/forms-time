@@ -30,6 +30,7 @@ let BIGYEAR = undefined;
 function init() {
 	channelPicker.addEventListener("submit", clickDo);
 	zoomSlider.addEventListener("input", scaleGrid);
+    scaleGrid();
 	highlightToday();
 	status.innerText = "ready to go";
 }
@@ -88,8 +89,8 @@ function updateYears() {
         .join(" ");
 }
 
-function scaleGrid(e) {
-    const zoomLevel = e.target.value;
+function scaleGrid() {
+    const zoomLevel = zoomSlider.value;
     calendarList.style = `--zoom: ${zoomLevel}rem`;
 }
 
