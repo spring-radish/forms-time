@@ -109,9 +109,9 @@ const detectors = [
 	},
 	(clue) => {
 		// January 22, 2033
-		const match = clue.match(/([A-Za-z]{3,12}),? ?(\d{1,2})\W{0,2}(\d{4})/);
+		const match = clue.match(/([A-Za-z]{3,12}) ?(\d{1,2})(?:[A-Za-z]{2})?\W{0,2}(\d{4})/);
 		if (!match) return null;
-		const date = new Date(match[0]);
+		const date = new Date(match[2] + match[1] + match[3]);
 		const month = date.getMonth() + 1;
 		if (!month) return null;
 		const day = trimLeadingZero(match[2]);
@@ -119,10 +119,10 @@ const detectors = [
 		return [`${month}-${day}`, year];
 	},
 	(clue) => {
-		// 22 January 2033
-		const match = clue.match(/(\d{1,2}) ?([A-Za-z]{3,12}),? ?(\d{2,4})/);
+		// 22 January 2033 or 22nd January, 2023
+		const match = clue.match(/(\d{1,2})(?:[A-Za-z]{2})? ?([A-Za-z]{3,12}),? ?(\d{2,4})/);
 		if (!match) return null;
-		const date = new Date(match[0]);
+		const date = new Date(match[3] + match[2] + match[1]);
 		const month = date.getMonth() + 1;
 		if (!month) return null;
 		const day = trimLeadingZero(match[1]);

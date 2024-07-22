@@ -42,8 +42,20 @@ test('date in text: DD mmmmm, YYYY', () => {
     expect(detectDate(block)[1]).toBe('2024')
 })
 
-test('date in text: mmmmm DDth, YYYY', () => {
+test('date in text: DDth mmmmm, YYYY', () => {
+    const block = ['28th June, 2024', '1-1-24']
+    expect(detectDate(block)[0]).toBe('6-28')
+    expect(detectDate(block)[1]).toBe('2024')
+})
+
+test('date in text: mmmmm DD, YYYY', () => {
     const block = [undefined, 'Friend #018 April 30, 2024 Bruno']
+    expect(detectDate(block)[0]).toBe('4-30')
+    expect(detectDate(block)[1]).toBe('2024')
+})
+
+test('date in text: mmmmm DDth, YYYY', () => {
+    const block = [undefined, 'Friend #018 April 30th, 2024 Bruno']
     expect(detectDate(block)[0]).toBe('4-30')
     expect(detectDate(block)[1]).toBe('2024')
 })
