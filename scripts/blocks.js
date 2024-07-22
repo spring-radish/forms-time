@@ -67,5 +67,5 @@ export function renderDay(blocks, date) {
         ${articleInner}
         </article>`
 
-    return `<li id="${date}">${preview} ${article}</li>`
+    return `${preview} ${article}`
 }

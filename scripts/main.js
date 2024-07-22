@@ -1,101 +1,114 @@
 // tally
 
-import { dispatchUrl } from './api.js'
-import { intoYear } from './year.js'
-import { renderDay } from './blocks.js'
-import cachedResponse from './cachedApi.json' assert {type: 'json'}
+/**
+ * Imports
+ */
+import { dispatchUrl } from "./api.js";
+import { renderDay } from "./blocks.js";
+import { blocksToYear } from "./timestructures.js";
+// import cachedResponse from "./cachedApi.json" assert { type: "json" };
+
+/**
+ * Elements
+ */
+const channelPicker = document.getElementById("channel-picker");
+const channelUrl = document.getElementById("channel-url");
+const channelGo = document.getElementById("channel-go");
+const status = document.getElementById("status");
+const calendarList = document.getElementById("calendar-list");
+const zoomSlider = document.getElementById("zoom-slider");
+const yearsLegend = document.getElementById("years-legend");
+
+/**
+ * State
+ */
+let BIGYEAR = undefined;
 
 
 
-const channelPicker = document.getElementById('channel-picker')
-const channelUrl = document.getElementById('channel-url')
-const channelGo = document.getElementById('channel-go')
-const status = document.getElementById('status')
-const calendarList = document.getElementById('calendar-list')
-const zoomSlider = document.getElementById('zoom-slider')
-const yearsLegend = document.getElementById('years-legend')
-const booksDatalist = document.getElementById('books')
-const inStyle = document.querySelector('style')
-
-
-let BIGCAL = null
-
-
-
-async function init() {
-    channelPicker.addEventListener('submit', clickDo)
-    zoomSlider.addEventListener('input', scaleGrid)
-    const message = await addDays(null)
-    status.innerText = message
-    // books.innerHTML = await getSuggestions('https://www.are.na/rosemary/how-i-did-it')
-    inStyle.sheet.insertRule(todaysId())
+/**
+ * Overall Plan
+ */
+function init() {
+	channelPicker.addEventListener("submit", clickDo);
+	zoomSlider.addEventListener("input", scaleGrid);
+    scaleGrid();
+	highlightToday();
+	status.innerText = "ready to go";
 }
 
-function todaysId() {
-    const today = new Date()
-    const month = today.getMonth() + 1
-    const day = today.getDate()
-    return `#calendar-list [id="${month}-${day}"] {border: 3px double #e5e4ff}`
-}
+init();
 
-async function addDays(url) {
-    // const {message, blocks} = {message: 'ready to go', blocks: cachedResponse.contents}
-    const {message, blocks} = url ? await dispatchUrl(url) 
-        : {message: 'ready to go', blocks: null}
 
-    console.log('message', message)
-    console.log(blocks)
 
-    const year = intoYear(blocks, BIGCAL)
-    const yearHtml = [...year.days]
-        .map(([date, blocks]) =>
-            renderDay(blocks, date))
-        .join(' ')
-
-    if (!document.startViewTransition) {
-        calendarList.innerHTML = yearHtml
-    } else {
-        document.startViewTransition(() => {calendarList.innerHTML = yearHtml});
-    }
-    
-
-    BIGCAL = year
-    console.log(year.info)
-    yearsLegend.innerHTML = [...year.info.yearsRepresented]
-        .sort()
-        .map(y => `<li class='year-${y}'>${y}</li>`)
-        .join(' ')
-
-    return message
-}
-
-function makeColor(year) {
-
-}
-
+/**
+ * Behind the Scenes
+ */
 async function clickDo(e) {
-    e.preventDefault()
-    channelUrl.setAttribute('disabled', '')
-    channelGo.setAttribute('disabled', '')
+    // Hold the phone
+    e.preventDefault();
 
-    const url = channelUrl.value
+    // Close the portal
+    channelUrl.setAttribute("disabled", "");
+    channelGo.setAttribute("disabled", "");
 
-    status.innerText = `getting ${url}`
+    // Repeat the question
+    const url = channelUrl.value;
+    status.innerText = `getting ${url}`;
 
-    const message = await addDays(url)
+    // Seek the answer
+    const {message, blocks} = await dispatchUrl(url);
 
-    status.innerText = message
+    // Amend the tome
+    BIGYEAR = blocksToYear(blocks);
+    addDays()
+    updateYears()
+    status.innerText = message;
 
-    channelUrl.removeAttribute('disabled')
-    channelGo.removeAttribute('disabled')
+    // Reopen the portal
+    channelUrl.removeAttribute("disabled");
+    channelGo.removeAttribute("disabled");
+}
+
+/**
+ * Pieces of the Puzzle
+ */
+function addDays() {
+    for (const [date, blocks] of BIGYEAR.days) {
+        const li = document.getElementById(date);
+        if (!li) {
+            console.log(`Skipping ${blocks.length} block(s) with date ${date}.`);
+            continue;
+        }
+        li.innerHTML = renderDay(blocks, date);
+    }
+}
+
+function updateYears() {
+    yearsLegend.innerHTML = [...BIGYEAR.info.yearsRepresented]
+        .sort()
+        .map((y) => `<li class='year-${y}'>${y}</li>`)
+        .join(" ");
+}
+
+function scaleGrid() {
+    const zoomLevel = zoomSlider.value;
+    calendarList.style = `--zoom: ${zoomLevel}rem`;
+}
+
+function highlightToday() {
+    const today = new Date();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+    const id = `${month}-${day}`;
+
+    document.getElementById(id).classList.add('today');
 }
 
 
-function scaleGrid(e) {
-    const zoomLevel = e.target.value
-    calendarList.style = `--zoom: ${zoomLevel}rem`
-}
 
-
-
-init()
+/**
+ * Unimplemented function to programatically
+ * generate a color scale for yearsLegend
+ */
+function makeColor(year) {}
