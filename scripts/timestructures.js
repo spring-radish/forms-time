@@ -109,7 +109,7 @@ const detectors = [
 	},
 	(clue) => {
 		// January 22, 2033
-		const match = clue.match(/([A-Za-z]{3,12}) ?(\d{1,2})(?:[A-Za-z]{2})?\W{0,2}(\d{4})/);
+		const match = clue.match(/([A-Za-z]{3,12}),? ?(\d{1,2})(?:[A-Za-z]{2})?\W{0,2}(\d{4})/);
 		if (!match) return null;
 		const date = new Date(match[2] + match[1] + match[3]);
 		const month = date.getMonth() + 1;
