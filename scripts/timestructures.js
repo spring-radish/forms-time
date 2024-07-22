@@ -17,13 +17,35 @@ export function blocksToYear(blocks) {
 	return [...year];
 }
 
-export function detectDate(clues) {
+
+/** 
+ * detectDate: Array<String | undefined> -> String
+ * Returns the first non-null date in the form "M-D". 
+ * Clues and detectors are both ordered by preference.
+ * My style here wishes that JS could be lazy...
+ */
+function detectDate(clues) {
 	return clues.flatMap(tryDetectors).find(truthy);
 }
 
+/**
+ * tryDetectors: String | undefined -> Array<String | null>
+ * Coerces the clue to a string, then tries all detectors on 
+ * it. Each detector returns "M-D" if it matches or else null.
+ */
 function tryDetectors(clue) {
 	return detectors.map((detector) => detector(String(clue)));
 }
+
+
+/**
+ * Patterns to look for dates, in order of preference. These
+ * are based on date formats that I've encountered on Are.na.
+ * The browser's Date() parser is used to handle month names,
+ * so that other languages might be supported. Hopefully I'd
+ * like to also accommodate non-Gregorian dates and day-month 
+ * ordering, but I'm not sure yet of the best way to do this.
+ */
 
 const detectors = [
 	(clue) => {
@@ -69,6 +91,12 @@ const detectors = [
 		return `${month}-${day}`;
 	},
 ];
+
+
+
+/**
+ * Descriptive Utilities
+ */ 
 
 function trimLeadingZero(str) {
 	if (str.startsWith("0")) return str.slice(1);
