@@ -5,6 +5,9 @@ export function blocksToYear(blocks, year = emptyYear) {
     if (!blocks) return year;
 
 	for (const block of blocks) {
+        // Skip this block if we already have it
+        if (year.info.blockIds.has(block.id)) continue;
+
         // The places to look for a date
 		const clues = [
 			block.title,
