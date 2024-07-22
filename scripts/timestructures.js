@@ -9,7 +9,7 @@ export function blocksToYear(blocks) {
 			block.created_at,
 		];
 		const date = detectDate(clues);
-		const yearday = year.get(date) || [];
+		const oldday = year.get(date) || [];
 		const newday = oldday.concat(block); // use .push if performance needs it
 		year.set(date, newday);
 	}
