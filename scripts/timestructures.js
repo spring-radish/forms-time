@@ -72,7 +72,7 @@ const detectors = [
 	(clue) => {
 		// 20330122 or 2033.01.22 or 2033/01/22 or 2024-07-21T18:37:59.078Z
 		const match =
-			clue.match(/^(\d{4})(\d{2})(\d{2})/) ||
+			clue.match(/^(\d{4})(\d{2})(\d{2})(?!\d)/) ||
 			clue.match(/^(\d{4})-(\d{2})-(\d{2})/) ||
 			clue.match(/^(\d{4})\/(\d{2})\/(\d{2})/) ||
 			clue.match(/^(\d{4})\.(\d{2})\.(\d{2})/);
@@ -97,7 +97,7 @@ const detectors = [
 	(clue) => {
 		// 33.01.22 or 330122
 		const match =
-			clue.match(/^(\d{2})(\d{2})(\d{2})/) ||
+			clue.match(/^(\d{2})(\d{2})(\d{2})(?!\d)/) ||
 			clue.match(/^(\d{2})\.(\d{2})\.(\d{2})/) ||
 			clue.match(/^(\d{2})-(\d{2})-(\d{2})/) ||
 			clue.match(/^(\d{2})\/(\d{2})\/(\d{2})/);

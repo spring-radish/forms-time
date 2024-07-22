@@ -72,6 +72,12 @@ test('filenames not to recognize', () => {
     expect(detectDate(block)[1]).toBe('2024')
 })
 
+test('filenames not to recognize', () => {
+    const block = ['47020122222_e2f42222aa_o.jpg?w=600-h=1200', '2023-10-20T23:32:39.272Z']
+    expect(detectDate(block)[0]).toBe('10-20')
+    expect(detectDate(block)[1]).toBe('2023')
+})
+
 
 test('what about ranges?', () => {
     const block = ['4/6/23–4/8/23']
