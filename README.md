@@ -10,7 +10,7 @@ pnpm run dev
 - [ ] color schemes
 - [ ] get channel datalist from superchannel
 - [ ] organize css
-- [ ] look inside block for dates
+- [x] look inside block for dates
 - [ ] autofill channel from query parameter
 - [ ] local date formatting
 - [ ] all dates relative to local timezone
