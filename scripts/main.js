@@ -18,6 +18,7 @@ const status = document.getElementById("status");
 const calendarList = document.getElementById("calendar-list");
 const zoomSlider = document.getElementById("zoom-slider");
 const yearsLegend = document.getElementById("years-legend");
+const circumstances = document.getElementById("circumstances");
 
 /**
  * State
@@ -32,6 +33,7 @@ let BIGYEAR = undefined;
 function init() {
 	channelPicker.addEventListener("submit", clickDo);
 	zoomSlider.addEventListener("input", scaleGrid);
+    document.addEventListener("keyup", hearKey);
     scaleGrid();
 	highlightToday();
 	status.innerText = "ready to go";
@@ -94,6 +96,51 @@ function updateYears() {
 function scaleGrid() {
     const zoomLevel = zoomSlider.value;
     calendarList.style = `--zoom: ${zoomLevel}rem`;
+}
+
+function hearKey(e) {
+    const dayIsOpen = window.location.hash.startsWith("#inner");
+
+    switch (e.key) {
+        case "Escape":
+            if (dayIsOpen) {
+                window.location.hash = "#circumstances"
+                break
+            } 
+            circumstances.toggleAttribute('open')
+            break
+        case "ArrowRight":
+            if (dayIsOpen) {
+                const currentDay = window.location.hash.replace('#inner-', '')
+                const nextDay = findNextDay(currentDay)
+                window.location.hash = `#inner-${nextDay}`
+            }
+            break
+        case "ArrowLeft":
+            if (dayIsOpen) {
+                const currentDay = window.location.hash.replace('#inner-', '')
+                const prevDay = findPrevDay(currentDay)
+                window.location.hash = `#inner-${prevDay}`
+            }
+            break
+    }
+}
+
+function findNextDay(id) {
+    const firstOfJanuary = document.getElementById('1-1')
+    let currentDay = document.getElementById(id)
+    for (let i = 366; i > 0; i--) {
+        currentDay = currentDay.nextElementSibling || firstOfJanuary;
+        if (currentDay.hasChildNodes()) return currentDay.id;
+    }
+}
+function findPrevDay(id) {
+    const lastOfDecember = document.getElementById('12-31')
+    let currentDay = document.getElementById(id)
+    for (let i = 366; i > 0; i--) {
+        currentDay = currentDay.previousElementSibling || lastOfDecember;
+        if (currentDay.hasChildNodes()) return currentDay.id;
+    }
 }
 
 function highlightToday() {
