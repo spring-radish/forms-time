@@ -173,7 +173,7 @@ h1 {
 
     &[id='2-29'] { border-style: dashed; }
     &.today { border-style: double; border-width: 3px; }
-    &:target { border: 2px solid #555; }
+    &:has(:target) { border-width: 0; }
 
     & > a {
       width: 100%;
