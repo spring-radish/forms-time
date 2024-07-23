@@ -211,6 +211,21 @@ h1 {
     [id^='12-'] { grid-column: 12 }
   }
 
+  details:has([value="days"]:checked) + & {
+    grid-template-columns: 1fr;
+    gap: 0;
+
+    li {
+      border: none !important;
+      aspect-ratio: unset;
+
+      > a {
+        height: calc(var(--zoom) / 8);
+      }
+    }
+  }
+
+
   [id^='12-'] { background-color: color-mix(in lab, lavender, #7373d1 60%) }
   [id^='1-'], [id^='11-'] { background-color: color-mix(in lab, lavender, #7373d1 53%) }
   [id^='2-'], [id^='10-'] { background-color: color-mix(in lab, lavender, #7373d1 46%) }

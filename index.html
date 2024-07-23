@@ -51,7 +51,9 @@
       </ul>
     </div>
     <form>
-      <label class="toggle">months<input type="checkbox" value="months"></label>
+      <label class="toggle">months<input type="radio" name="view" value="months"></label>
+      <label class="toggle">days<input type="radio" name="view" value="days"></label>
+      <label class="toggle">year<input checked type="radio" name="view" value="year"></label>
       <label for="zoom-slider">zoom</label>
       <input type="range" min="2" max="10.1" step=".3" value="4.2" id="zoom-slider">
       <button type="button" onclick="location.reload()">erase</button>
