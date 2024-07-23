@@ -245,14 +245,14 @@ body:has([value="years"]:checked) {
   .year-2014 { --color: #41B19A }
   .year-2015 { --color: #49A8B7 }
   .year-2016 { --color: #5A90C0 }
-  .year-2017 { --color: #6073C2 }
+  .year-2017 { --color: #6275C8 }
   .year-2018 { --color: #7366c4 }
-  .year-2019 { --color: #9169CA }
-  .year-2020 { --color: #B16CD0 }
-  .year-2021 { --color: #c042a7 }
-  .year-2022 { --color: #DB72C0 }
-  .year-2023 { --color: #DC657B }
-  .year-2024 { --color: #DA7760 }
+  .year-2019 { --color: #9466CB }
+  .year-2020 { --color: #BA66D2 }
+  .year-2021 { --color: #D967CF }
+  .year-2022 { --color: #DF67AF }
+  .year-2023 { --color: #E5698B }
+  .year-2024 { --color: #EA6F6A }
 
 }
 /*.text { --color: #7373d1 }*/
