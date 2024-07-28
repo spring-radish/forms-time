@@ -1,7 +1,7 @@
 /**
  * blocksToYear: (Array<Block>, Object) -> Object
  */
-export function blocksToYear(blocks, year = emptyYear) {
+export function blocksToYear(blocks, year) {
     if (!blocks) return year;
 
 	for (const block of blocks) {
@@ -148,13 +148,13 @@ function addMillenium(str) {
 	return str;
 }
 
-const emptyYear = {
-	days: new Map(),
-	info: {
-		yearsRepresented: new Set(),
-		blockIds: new Set(),
-	},
-};
+// const emptyYear = {
+// 	days: new Map(),
+// 	info: {
+// 		yearsRepresented: new Set(),
+// 		blockIds: new Set(),
+// 	},
+// };
 
 const validDates = buildDates();
 export function validDate(x) {

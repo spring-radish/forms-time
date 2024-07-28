@@ -23,8 +23,13 @@ const circumstances = document.getElementById("circumstances");
 /**
  * State
  */
-let BIGYEAR = undefined;
-
+let BIGYEAR = {
+    days: new Map(),
+    info: {
+        yearsRepresented: new Set(),
+        blockIds: new Set(),
+    }
+};
 
 
 /**
@@ -62,7 +67,10 @@ async function clickDo(e) {
     const {message, blocks} = await dispatchUrl(url);
 
     // Amend the tome
-    BIGYEAR = blocksToYear(blocks);
+    // console.log('blocks', blocks)
+    // console.log(blocksToYear(blocks))
+    // console.log(BIGYEAR)
+    BIGYEAR = blocksToYear(blocks, BIGYEAR);
     addDays()
     updateYears()
     status.innerText = message;
