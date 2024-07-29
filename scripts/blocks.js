@@ -48,17 +48,11 @@ export function renderDay(blocks, date) {
 
     blocks.sort((a, b) => a.fullyear - b.fullyear)
 
-    const previewInner = blocks.map(block => 
-        `<div class="preview ${block.class.toLowerCase()} year-${block.fullyear}"></div>`)
-        .join('')
-    const preview = `<a style="animation-delay:${Math.random()}s" class="transom" href="#inner-${date}">${previewInner}</a>`
+    const previewInner = renderPreviewParts(blocks)
+    const delay = Math.random()
+    const preview = `<a style="animation-delay:${delay}s" class="transom" href="#inner-${date}">${previewInner}</a>`
 
-    const articleInner = blocks.map(block =>
-        `<section class="${block.class.toLowerCase()} year-${block.fullyear}">
-            <a class="block" href="//are.na/block/${block.id}" target="_blank">${block.fullyear}</a> 
-            ${findTemplate(block)}
-        </section>`)
-        .join('')
+    const articleInner = renderArticleParts(blocks)
     const article = `<article class="content" id="inner-${date}">
         <header>
             <date>${date}</date> 
@@ -79,7 +73,7 @@ export function renderPreviewParts(blocks) {
 export function renderArticleParts(blocks) {
     const parts = blocks.map(block =>
         `<section class="${block.class.toLowerCase()} year-${block.fullyear}">
-            <a class="block" href="//are.na/block/${block.id}" target="_blank">${block.fullyear}</a> 
+            <a class="source" href="//are.na/block/${block.id}" target="_blank">${block.fullyear}</a> 
             ${findTemplate(block)}
         </section>`)
     return parts.join('')
