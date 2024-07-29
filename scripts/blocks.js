@@ -51,7 +51,7 @@ export function renderDay(blocks, date) {
     const previewInner = blocks.map(block => 
         `<div class="preview ${block.class.toLowerCase()} year-${block.fullyear}"></div>`)
         .join('')
-    const preview = `<a href="#inner-${date}">${previewInner}</a>`
+    const preview = `<a class="transom" href="#inner-${date}">${previewInner}</a>`
 
     const articleInner = blocks.map(block =>
         `<section class="${block.class.toLowerCase()} year-${block.fullyear}">
@@ -68,4 +68,25 @@ export function renderDay(blocks, date) {
         </article>`
 
     return `${preview} ${article}`
+}
+
+export function renderPreviewParts(blocks) {
+    const parts = blocks.map(block => 
+        `<div class="preview ${block.class.toLowerCase()} year-${block.fullyear}"></div>`)
+    return parts.join('')
+}
+
+export function renderArticleParts(blocks) {
+    const parts = blocks.map(block =>
+        `<section class="${block.class.toLowerCase()} year-${block.fullyear}">
+            <a class="block" href="//are.na/block/${block.id}" target="_blank">${block.fullyear}</a> 
+            ${findTemplate(block)}
+        </section>`)
+    return parts.join('')
+}
+
+// Map<String, Array<Block>> -> Set
+export function getBlockIds(days) {
+    const blocks = Array.from(days.values()).flat()
+    return new Set(blocks.map(b => b.id))
 }

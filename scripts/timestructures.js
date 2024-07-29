@@ -1,12 +1,27 @@
 /**
- * blocksToYear: (Array<Block>, Object) -> Object
+ * This module produces and operates on types called Years,
+ * where Year = Map<String, Array<Block>>.
+ * They look like this:
+ * 		[
+ * 			'1-1' -> [block, block],
+ * 			'3-12' -> [block],
+ * 			'10-4' -> [block, block, block],
+ * 			...
+ * 		]
+ * 
+ * 
+ * blocksNewYear: (Array<Block>, Set) -> Year
+ * Looks at an array of blocks, and groups them by a date
+ * that they are likely to correspond to—either manually
+ * associated in the block's title/text or found in the
+ * provided metadata. 
  */
-export function blocksToYear(blocks, year) {
-    if (!blocks) return year;
+export function blocksNewYear(blocks, blockIds) {
+	const newDays = new Map()
 
 	for (const block of blocks) {
         // Skip this block if we already have it
-        if (year.info.blockIds.has(block.id)) continue;
+        if (blockIds.has(block.id)) continue;
 
         // The places to look for a date
 		const clues = [
@@ -18,37 +33,46 @@ export function blocksToYear(blocks, year) {
 		const [blockDate, blockYear] = detectDate(clues);
 		block.fullyear = blockYear;
 
-		const day = year.days.get(blockDate);
-		/**
-		 * days: Map[
-		 *          '1-22' -> [block, block],
-		 *          '1-23' -> [block]
-		 *           ...
-		 *       ]
-		 */
+		const day = newDays.get(blockDate);
+		
 		if (day) day.push(block);
-		else year.days.set(blockDate, [block]);
+		else newDays.set(blockDate, [block]);
 
-		/**
-		 * info: {
-		 *          blockIds: Set[id, id, id],
-		 *          yearsRepresented: Set[year, year],
-		 *       }
-		 */
-		year.info.blockIds.add(block.id);
-		year.info.yearsRepresented.add(blockYear);
+		blockIds.add(block.id)
 	}
 
-	return year;
+	return newDays;
 }
 
 /**
+ * toMergedYears: (Year, Year) -> Year
+ * A non-mutating function to merge two Years. Entries with
+ * the same key are merged by concatenating their block arrays.
+ */
+export function toMergedYears(x, z) {
+	const y = new Map(x)
+
+	for (const [date, blocks] of z) {
+		if (y.has(date)) {
+			y.get(date).push(...blocks)
+		} else {
+			y.set(date, blocks)
+		}
+	}
+
+	return y
+}
+
+
+/**
+ * Date Detection Sequence
+ * 
  * detectDate: Array<String | undefined> -> [String, String]
  * Returns the first non-null date in the form ["M-D", "Y"].
  * Clues and detectors are both ordered by preference.
  * My style here wishes that JS could be lazy...
  */
-export function detectDate(clues) {
+function detectDate(clues) {
 	return clues.flatMap(tryDetectors).find(validDate);
 }
 
@@ -148,16 +172,13 @@ function addMillenium(str) {
 	return str;
 }
 
-// const emptyYear = {
-// 	days: new Map(),
-// 	info: {
-// 		yearsRepresented: new Set(),
-// 		blockIds: new Set(),
-// 	},
-// };
+/**
+ * Generate Valid Date Strings 
+ * of form "M-D" without leading zeros
+ */
 
 const validDates = buildDates();
-export function validDate(x) {
+function validDate(x) {
     return Boolean(x) && validDates.includes(x[0]);
 }
 
@@ -187,3 +208,51 @@ function buildDates() {
 }
 
 
+
+
+
+
+/**
+ * Retired Function
+ * blocksToYear: (Array<Block>, Object) -> Object
+ */
+function blocksToYear(blocks, year) {
+    if (!blocks) return year;
+
+	for (const block of blocks) {
+        // Skip this block if we already have it
+        if (year.info.blockIds.has(block.id)) continue;
+
+        // The places to look for a date
+		const clues = [
+			block.title,
+			block.content,
+			block.connected_at,
+			block.created_at,
+		];
+		const [blockDate, blockYear] = detectDate(clues);
+		block.fullyear = blockYear;
+
+		const day = year.days.get(blockDate);
+		/**
+		 * days: Map[
+		 *          '1-22' -> [block, block],
+		 *          '1-23' -> [block]
+		 *           ...
+		 *       ]
+		 */
+		if (day) day.push(block);
+		else year.days.set(blockDate, [block]);
+
+		/**
+		 * info: {
+		 *          blockIds: Set[id, id, id],
+		 *          yearsRepresented: Set[year, year],
+		 *       }
+		 */
+		year.info.blockIds.add(block.id);
+		year.info.yearsRepresented.add(blockYear);
+	}
+
+	return year;
+}

@@ -4,9 +4,9 @@
  * Imports
  */
 import { dispatchUrl } from "./api.js";
-import { renderDay } from "./blocks.js";
-import { blocksToYear } from "./timestructures.js";
-// import cachedResponse from "./cachedApi.json" assert { type: "json" };
+import { renderDay, renderArticleParts, renderPreviewParts, getBlockIds } from "./blocks.js";
+import { blocksNewYear, toMergedYears } from "./timestructures.js";
+import cachedResponse from "./cachedApi.json" assert { type: "json" };
 
 /**
  * Elements
@@ -23,7 +23,7 @@ const circumstances = document.getElementById("circumstances");
 /**
  * State
  */
-let BIGYEAR = {
+let STATE = {
     days: new Map(),
     info: {
         yearsRepresented: new Set(),
@@ -66,6 +66,27 @@ async function clickDo(e) {
     // Seek the answer
     const {message, blocks} = await dispatchUrl(url);
 
+    /**
+     * Diff strategy: 
+     * 1. make year with only new blocks
+     * 2. insert those blocks into the page
+     * 3. merge into state
+     */
+
+    const blockIds = getBlockIds(STATE.days)
+    // console.log(blockIds)
+    const newDays = blocksNewYear(blocks, blockIds)
+    // console.log(state)
+    insertDays(newDays)
+    STATE.days = toMergedYears(STATE.days, newDays)
+    console.log(STATE.days)
+    // updateYears(state)
+
+    /**
+     * End diff strategy.
+     * Full rerender strategy:
+     *
+
     // Amend the tome
     // console.log('blocks', blocks)
     // console.log(blocksToYear(blocks))
@@ -73,6 +94,7 @@ async function clickDo(e) {
     BIGYEAR = blocksToYear(blocks, BIGYEAR);
     addDays()
     updateYears()
+    */
     status.innerText = message;
 
     // Reopen the portal
@@ -83,15 +105,46 @@ async function clickDo(e) {
 /**
  * Pieces of the Puzzle
  */
-function addDays() {
-    for (const [date, blocks] of BIGYEAR.days) {
+function insertDays(days) {
+    for (const [date, blocks] of days) {
+        const li = document.getElementById(date);
+        if (!li) {
+            console.log(`Skipping ${blocks.length} block(s) with date ${date}.`);
+        } else if (!li.hasChildNodes()) {
+            li.innerHTML = renderDay(blocks, date);    
+        } else {
+            const transom = li.querySelector('.transom')
+            const article = li.querySelector('article')
+            transom.insertAdjacentHTML("beforeend", renderPreviewParts(blocks))
+            article.insertAdjacentHTML("beforeend", renderArticleParts(blocks))
+        }
+    }
+}
+
+async function addDays() {
+    const shuffled = shuffle(BIGYEAR.days)
+    // console.log('shuffled', shuffled)
+    for (const [date, blocks] of shuffled) {
         const li = document.getElementById(date);
         if (!li) {
             console.log(`Skipping ${blocks.length} block(s) with date ${date}.`);
             continue;
         }
         li.innerHTML = renderDay(blocks, date);
+        setTimeout(() => {console.log(li.querySelector('.preview.fresh'))}, 10)
+        // await new Promise((resolve, _) => setTimeout(() => {resolve()}, 1))
     }
+}
+
+function shuffle(map) {
+  let out = [...map];
+  for (let m = out.length-1; m >= 0; m--) {
+    const i = Math.floor(Math.random() * m);
+    const t = out[m];
+    out[m] = out[i];
+    out[i] = t;
+  }
+  return out
 }
 
 function updateYears() {
