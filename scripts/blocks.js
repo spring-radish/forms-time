@@ -51,7 +51,7 @@ export function renderDay(blocks, date) {
     const previewInner = blocks.map(block => 
         `<div class="preview ${block.class.toLowerCase()} year-${block.fullyear}"></div>`)
         .join('')
-    const preview = `<a style="animation-delay:${Math.random()/2}s" class="transom" href="#inner-${date}">${previewInner}</a>`
+    const preview = `<a style="animation-delay:${Math.random()}s" class="transom" href="#inner-${date}">${previewInner}</a>`
 
     const articleInner = blocks.map(block =>
         `<section class="${block.class.toLowerCase()} year-${block.fullyear}">
