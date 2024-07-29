@@ -19,6 +19,7 @@ const calendarList = document.getElementById("calendar-list");
 const zoomSlider = document.getElementById("zoom-slider");
 const yearsLegend = document.getElementById("years-legend");
 const circumstances = document.getElementById("circumstances");
+const animationCheckbox = document.getElementById("animation");
 
 /**
  * State
@@ -43,6 +44,7 @@ function init() {
     document.addEventListener("keyup", hearKey);
     scaleGrid();
 	highlightToday();
+    toggleAnimation();
 	status.innerText = "ready to go";
 }
 
@@ -180,6 +182,13 @@ function highlightToday() {
     const id = `${month}-${day}`;
 
     document.getElementById(id).classList.add('today');
+}
+
+function toggleAnimation() {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion)').matches;
+    console.log(reduceMotion)
+    if (reduceMotion) return;
+    animationCheckbox.setAttribute('checked', '')
 }
 
 

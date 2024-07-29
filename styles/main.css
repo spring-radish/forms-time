@@ -89,7 +89,11 @@ form {
 
   label {
     padding: .5rem;
+    text-align: center;
   }
+  .border-right {border-right: var(--border);}
+  .border-left {border-left: var(--border);}
+  .flex-grow {flex-grow: 1;}
 }
 
 #status {
@@ -355,3 +359,8 @@ body:has([value="years"]:checked) {
   } 
 }
 
+body:not(:has([value="animation"]:checked)) * {
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  transition-duration: 0s !important;
+}

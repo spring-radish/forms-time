@@ -10,7 +10,7 @@
   <style type="text/css"></style>
 </head>
 <body>
-  <details id="circumstances">
+  <details id="circumstances" open>
     <summary><h1>all form forms time / falls on the body</h1></summary>
     <div id="info">
       <p>a divinatory are.na mood tracker</p>
@@ -51,12 +51,15 @@
       </ul>
     </div>
     <form>
-      <label class="toggle">months<input type="radio" name="view" value="months"></label>
-      <label class="toggle">days<input type="radio" name="view" value="days"></label>
-      <label class="toggle">year<input checked type="radio" name="view" value="year"></label>
+      <label class="toggle flex-grow">year<input checked type="radio" name="view" value="year"></label>
+      <label class="toggle flex-grow">months<input type="radio" name="view" value="months"></label>
+      <label class="toggle flex-grow">days<input type="radio" name="view" value="days"></label>
+    </form>
+    <form>
+      <label class="border-right"><input type="checkbox" value="animation" id="animation"> animation</label>
       <label for="zoom-slider">zoom</label>
       <input type="range" min="2" max="10.1" step=".3" value="4.2" id="zoom-slider">
-      <button type="button" onclick="location.reload()">erase</button>
+      <button class="border-left" type="button" onclick="location.reload()">erase</button>
     </form>
   </details>
 
