@@ -25,6 +25,7 @@ details {
   position: fixed;
   bottom: .5rem;
   right: 1rem;
+  z-index: 1;
   border: var(--border);
   background: color-mix(in lab, #d4d4f1 90%, transparent);
 
@@ -221,6 +222,7 @@ h1 {
 
       > a {
         height: calc(var(--zoom) / 8);
+        flex-direction: row;
       }
     }
   }
@@ -241,10 +243,17 @@ h1 {
   --lighter: color-mix(in lab, var(--color) 75%, #eee);
   background: linear-gradient(to top, var(--color), #eee 400%);
 
-/*      li:nth-child(even) &:nth-child(even) {
-    background: linear-gradient(to bottom, var(--color), var(--lighter));
-  }*/
-/*      &.text { --color: #d46131 }*/
+  animation: 1s fadein;
+  & ~ & {animation: 1s flexup;}
+}
+
+@keyframes flexup {
+  from {flex-grow: 0;}
+  to {flex-grow: 1;}
+}
+@keyframes fadein {
+  from {opacity: 0;}
+  to {opacity: 1;}
 }
 
 .attachment { --color: #d645b2 }
