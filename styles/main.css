@@ -243,8 +243,8 @@ h1 {
   --lighter: color-mix(in lab, var(--color) 75%, #eee);
   background: linear-gradient(to top, var(--color), #eee 400%);
 
-  animation: 1s fadein;
-  & ~ & {animation: 1s flexup;}
+  &:first-child{opacity: 0; animation: 1s fadein forwards; animation-delay: inherit}
+  & ~ & {flex-grow: 0; animation: 1s flexup forwards; animation-delay: inherit}
 }
 
 @keyframes flexup {
