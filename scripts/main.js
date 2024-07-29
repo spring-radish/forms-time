@@ -121,32 +121,6 @@ function insertDays(days) {
     }
 }
 
-async function addDays() {
-    const shuffled = shuffle(BIGYEAR.days)
-    // console.log('shuffled', shuffled)
-    for (const [date, blocks] of shuffled) {
-        const li = document.getElementById(date);
-        if (!li) {
-            console.log(`Skipping ${blocks.length} block(s) with date ${date}.`);
-            continue;
-        }
-        li.innerHTML = renderDay(blocks, date);
-        setTimeout(() => {console.log(li.querySelector('.preview.fresh'))}, 10)
-        // await new Promise((resolve, _) => setTimeout(() => {resolve()}, 1))
-    }
-}
-
-function shuffle(map) {
-  let out = [...map];
-  for (let m = out.length-1; m >= 0; m--) {
-    const i = Math.floor(Math.random() * m);
-    const t = out[m];
-    out[m] = out[i];
-    out[i] = t;
-  }
-  return out
-}
-
 function updateYears(days) {
     const yearsRepresented = getBlocksField(days, 'fullyear')
     const yearsList = Array.from(yearsRepresented)
