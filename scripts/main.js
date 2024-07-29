@@ -25,11 +25,13 @@ const circumstances = document.getElementById("circumstances");
  */
 let STATE = {
     days: new Map(),
-    info: {
-        yearsRepresented: new Set(),
-        blockIds: new Set(),
-    }
+    // info: {
+    //     yearsRepresented: new Set(),
+    //     blockIds: new Set(),
+    // }
 };
+// console.log(BIGYEAR)
+// let count = 0
 
 
 /**
@@ -65,14 +67,18 @@ async function clickDo(e) {
 
     // Seek the answer
     const {message, blocks} = await dispatchUrl(url);
+    // const message = `test page ${count}`
+    // const blocks = cachedResponse.contents[count]
+    // count += 1
+
+    // Amend the tome
 
     /**
      * Diff strategy: 
      * 1. make year with only new blocks
      * 2. insert those blocks into the page
-     * 3. merge into state
+     * 3. merge into STATE
      */
-
     const blockIds = getBlocksField(STATE.days, 'id')
     // console.log(blockIds)
     const newDays = blocksNewYear(blocks, blockIds)
@@ -82,19 +88,6 @@ async function clickDo(e) {
     // console.log(STATE.days)
     updateYears(STATE.days)
 
-    /**
-     * End diff strategy.
-     * Full rerender strategy:
-     *
-
-    // Amend the tome
-    // console.log('blocks', blocks)
-    // console.log(blocksToYear(blocks))
-    // console.log(BIGYEAR)
-    BIGYEAR = blocksToYear(blocks, BIGYEAR);
-    addDays()
-    updateYears()
-    */
     status.innerText = message;
 
     // Reopen the portal
