@@ -85,8 +85,8 @@ export function renderArticleParts(blocks) {
     return parts.join('')
 }
 
-// Map<String, Array<Block>> -> Set
-export function getBlockIds(days) {
+// Year -> Set
+export function getBlocksField(days, field) {
     const blocks = Array.from(days.values()).flat()
-    return new Set(blocks.map(b => b.id))
+    return new Set(blocks.map(b => b[field]))
 }

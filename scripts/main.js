@@ -4,7 +4,7 @@
  * Imports
  */
 import { dispatchUrl } from "./api.js";
-import { renderDay, renderArticleParts, renderPreviewParts, getBlockIds } from "./blocks.js";
+import { renderDay, renderArticleParts, renderPreviewParts, getBlocksField } from "./blocks.js";
 import { blocksNewYear, toMergedYears } from "./timestructures.js";
 import cachedResponse from "./cachedApi.json" assert { type: "json" };
 
@@ -73,14 +73,14 @@ async function clickDo(e) {
      * 3. merge into state
      */
 
-    const blockIds = getBlockIds(STATE.days)
+    const blockIds = getBlocksField(STATE.days, 'id')
     // console.log(blockIds)
     const newDays = blocksNewYear(blocks, blockIds)
     // console.log(state)
     insertDays(newDays)
     STATE.days = toMergedYears(STATE.days, newDays)
-    console.log(STATE.days)
-    // updateYears(state)
+    // console.log(STATE.days)
+    updateYears(STATE.days)
 
     /**
      * End diff strategy.
@@ -111,7 +111,7 @@ function insertDays(days) {
         if (!li) {
             console.log(`Skipping ${blocks.length} block(s) with date ${date}.`);
         } else if (!li.hasChildNodes()) {
-            li.innerHTML = renderDay(blocks, date);    
+            li.innerHTML = renderDay(blocks, date);
         } else {
             const transom = li.querySelector('.transom')
             const article = li.querySelector('article')
@@ -147,11 +147,13 @@ function shuffle(map) {
   return out
 }
 
-function updateYears() {
-    yearsLegend.innerHTML = [...BIGYEAR.info.yearsRepresented]
+function updateYears(days) {
+    const yearsRepresented = getBlocksField(days, 'fullyear')
+    const yearsList = Array.from(yearsRepresented)
         .sort()
         .map((y) => `<li class='year-${y}'>${y}</li>`)
         .join(" ");
+    yearsLegend.innerHTML = yearsList
 }
 
 function scaleGrid() {
