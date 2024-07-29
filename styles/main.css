@@ -11,9 +11,8 @@ body {
 }
 a {
   color: var(--totalthaw);
-
   &:visited {
-    color: var(--palethaw);
+    color: oklch(from var(--totalthaw) calc(l * 0.5) c calc(h + 20));
   }
 }
 p {
@@ -72,6 +71,7 @@ form {
     font-family: inherit;
     font-size: inherit;
     color: inherit;
+    transition: 300ms background;
 
     &:hover, &:focus {
       background: var(--frost);
@@ -100,6 +100,7 @@ form {
   label {
     padding: .5rem;
     text-align: center;
+    transition: 300ms background;
   }
   .border-right {border-right: var(--border);}
   .border-left {border-left: var(--border);}
@@ -189,6 +190,9 @@ h1 {
     &[id='2-29'] { border-style: dashed; }
     &.today { border-style: double; border-width: 3px; }
     &:has(:target) { border-width: 0; }
+    &:has(a):hover { border-color: var(--superfrost); }
+
+    transition: 300ms border-color;
 
     & > a {
       width: 100%;
@@ -230,7 +234,7 @@ h1 {
     gap: 0;
 
     li {
-      border: none !important;
+      border-width: 0 !important;
       aspect-ratio: unset;
 
       > a {
@@ -319,6 +323,7 @@ body:has([value="years"]:checked) {
       border-left: var(--border);
       color: inherit;
       text-decoration: none;
+      transition: 300ms background;
 
       &:hover, &:focus {
         background: var(--ultrathaw);
