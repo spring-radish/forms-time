@@ -75,20 +75,22 @@ async function clickDo(e) {
 
     // Amend the tome
 
-    /**
-     * Diff strategy: 
-     * 1. make year with only new blocks
-     * 2. insert those blocks into the page
-     * 3. merge into STATE
-     */
-    const blockIds = getBlocksField(STATE.days, 'id')
-    // console.log(blockIds)
-    const newDays = blocksNewYear(blocks, blockIds)
-    // console.log(state)
-    insertDays(newDays)
-    STATE.days = toMergedYears(STATE.days, newDays)
-    // console.log(STATE.days)
-    updateYears(STATE.days)
+    if (blocks) {
+        /**
+         * Diff strategy: 
+         * 1. make year with only new blocks
+         * 2. insert those blocks into the page
+         * 3. merge into STATE
+         */
+        const blockIds = getBlocksField(STATE.days, 'id')
+        // console.log(blockIds)
+        const newDays = blocksNewYear(blocks, blockIds)
+        // console.log(state)
+        insertDays(newDays)
+        STATE.days = toMergedYears(STATE.days, newDays)
+        // console.log(STATE.days)
+        updateYears(STATE.days)
+    }
 
     status.innerText = message;
 
