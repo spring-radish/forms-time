@@ -2,13 +2,13 @@ body {
     --freeze: #d4d4f1;
     --thaw: #434078;
 
-    --frost: color-mix(in oklab, var(--freeze), white 40%);
-    --superfrost: color-mix(in oklab, var(--freeze), white 60%);
+    --frost: color-mix(in oklab, #d4d4f1, white 40%);
+    --superfrost: color-mix(in oklab, #d4d4f1, white 60%);
 
-    --almostfreeze: color-mix(in oklab, var(--freeze) 80%, var(--thaw));
+    --almostfreeze: color-mix(in oklab, #d4d4f1 80%, #434078);
 
-    --ultrathaw: oklch(from var(--thaw) calc(l * 1.6) calc(c * 1.8) h);
-    --palethaw: oklch(from var(--thaw) calc(l * 1.47) calc(c * 1.53) calc(h - 2));
-    --deepthaw: color-mix(in oklab, var(--thaw), black 40%);
-    --totalthaw: oklch(from var(--thaw) 50% 90% calc(h - 20));
+    --ultrathaw: oklch(from #434078 calc(l * 1.6) calc(c * 1.8) h);
+    --palethaw: oklch(from #434078 calc(l * 1.47) calc(c * 1.53) calc(h - 2));
+    --deepthaw: color-mix(in oklab, #434078, black 40%);
+    --totalthaw: oklch(from #434078 50% 90% calc(h - 20));
 }

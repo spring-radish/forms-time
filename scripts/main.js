@@ -6,7 +6,7 @@
 import { dispatchUrl } from "./api.js";
 import { renderDay, renderArticleParts, renderPreviewParts, getBlocksField } from "./blocks.js";
 import { blocksNewYear, toMergedYears } from "./timestructures.js";
-import cachedResponse from "./cachedApi.json" assert { type: "json" };
+// import cachedResponse from "./cachedApi.json" assert { type: "json" };
 
 /**
  * Elements
@@ -188,7 +188,7 @@ function highlightToday() {
 
 function toggleAnimation() {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion)').matches;
-    console.log(reduceMotion)
+    // console.log(reduceMotion)
     if (reduceMotion) return;
     animationCheckbox.setAttribute('checked', '')
 }

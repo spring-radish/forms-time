@@ -36,6 +36,7 @@ details {
   z-index: 1;
   border: var(--border);
   background: color-mix(in lab, var(--freeze) 90%, transparent);
+  background: #d4d4f1e6;
 
   summary {
     cursor: pointer;
@@ -202,13 +203,13 @@ h1 {
     }
   }
 
-  [id^='12-'] { --saturation: 60% }
-  [id^='1-'], [id^='11-'] { --saturation: 53% }
-  [id^='2-'], [id^='10-'] { --saturation: 46% }
-  [id^='3-'], [id^='9-'] { --saturation: 40% }
-  [id^='4-'], [id^='8-'] { --saturation: 34% }
-  [id^='5-'],[id^='7-'] { --saturation: 27% }
-  [id^='6-'] { --saturation: 22% }
+  [id^='12-'] { --saturation: 60%; background: #ADA6F0; }
+  [id^='1-'], [id^='11-'] { --saturation: 53%; background: #B4AEF1; }
+  [id^='2-'], [id^='10-'] { --saturation: 46%; background: #BBB4F1; }
+  [id^='3-'], [id^='9-'] { --saturation: 40%; background: #C0BBF2; }
+  [id^='4-'], [id^='8-'] { --saturation: 34%; background: #C6C1F2 }
+  [id^='5-'],[id^='7-'] { --saturation: 27%; background: #CDC9F3; }
+  [id^='6-'] { --saturation: 22%; background: #D1CEF4; }
 
   body:has([value="months"]:checked) & {
     grid-template-columns: repeat(12, 1fr);
@@ -264,10 +265,14 @@ h1 {
 }
 
 .attachment { --color: #d645b2 }
-.channel { --color: #68c668 }
+.channel { --color: #68c668 } 
 .image { --color: #a745e0 }
 .link { --color: #a7be34 }
 .media { --color: #5f9ed6 }
+
+article {
+
+}
 
 body:has([value="years"]:checked) {
   .year-2011 { --color: #48921f }
@@ -284,11 +289,14 @@ body:has([value="years"]:checked) {
   .year-2022 { --color: #DF67AF }
   .year-2023 { --color: #E5698B }
   .year-2024 { --color: #EA6F6A }
+  .year-2025 { --color: #e37851 }
 
 }
 /*.text { --color: #7373d1 }*/
 
 .content {
+  contain: content;
+  content-visibility: auto;
   display: none;
   z-index: 1;
   
@@ -351,6 +359,7 @@ body:has([value="years"]:checked) {
       padding: 4px 6px 2px 6px;
       text-decoration: none;
       background: color-mix(in lab, var(--frost), transparent 20%);
+      background: #e5e5f7cc;
       font-size: 10pt;
 
       &:hover, &:focus {
