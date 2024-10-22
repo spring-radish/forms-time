@@ -48,13 +48,15 @@ details {
   }
 
   #info {
-    max-height: 8rem;
+/*    max-height: 8rem;*/
     overflow-y: scroll;
   }
 
   &[open] {
     max-width: 90%;
     width: 25rem;
+    max-height: calc(100svh - 1.5rem);
+    overflow-y: scroll;
 
     & > * + * {
       border-top: var(--border);
