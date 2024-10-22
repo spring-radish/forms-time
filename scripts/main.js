@@ -42,6 +42,7 @@ function init() {
 	channelPicker.addEventListener("submit", clickDo);
 	zoomSlider.addEventListener("input", scaleGrid);
     document.addEventListener("keyup", hearKey);
+    fillFields();
     scaleGrid();
 	highlightToday();
     toggleAnimation();
@@ -191,6 +192,22 @@ function toggleAnimation() {
     // console.log(reduceMotion)
     if (reduceMotion) return;
     animationCheckbox.setAttribute('checked', '')
+}
+
+function fillFields() {
+    const url = new URL(window.location)
+    if (url.searchParams.size === 0) return
+    for (const [key, value] of url.searchParams) {
+        const element = circumstances.querySelector(`[name="${key}"]`)
+        if (!element) continue;
+        if (element.type === 'radio') {
+            circumstances.querySelector(`[name="${key}"][value="${value}"]`).checked = true;
+            // console.log('checked', value)
+        } else {
+            element.value = value
+            // console.log('filled', key, 'with', value)
+        }
+    }
 }
 
 
