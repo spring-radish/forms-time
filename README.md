@@ -1,5 +1,7 @@
 an are.na calendar
 
+This web app pulls blocks from any [are.na](https://are.na) channel and places them into a perennial calendar for chronological visualization.
+
 ```
 pnpm run dev
 ```
@@ -11,7 +13,7 @@ pnpm run dev
 - [ ] get channel datalist from superchannel
 - [ ] organize css
 - [x] look inside block for dates
-- [ ] autofill channel from query parameter
+- [x] autofill channel from query parameter
 - [ ] local date formatting
 - [ ] all dates relative to local timezone
 - [x] color by year
