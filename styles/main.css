@@ -191,7 +191,7 @@ h1 {
     background-color: color-mix(in lab, var(--frost), var(--ultrathaw) var(--saturation));
 
     &[id='2-29'] { border-style: dashed; }
-    &.today { border-style: double; border-width: 3px; }
+    &.today { border: 3px double var(--thaw); }
     &:has(:target) { border-width: 0; }
     &:has(a):hover { border-color: var(--superfrost); }
 

@@ -31,7 +31,8 @@ export function blocksNewYear(blocks, blockIds) {
 			block.created_at,
 		];
 		const [blockDate, blockYear] = detectDate(clues);
-		block.fullyear = blockYear;
+		block.fullyear = blockYear || new Date(block.created_at).getFullYear();
+		// console.log(block.content, 'returned', blockDate)
 
 		const day = newDays.get(blockDate);
 		
@@ -154,6 +155,38 @@ const detectors = [
 		if (!month) return null;
 		const day = trimLeadingZero(match[1]);
 		const year = addMillenium(match[3]);
+		return [`${month}-${day}`, year];
+	},
+	(clue) => {
+		// june 13 or june 13th
+		const match = clue.match(/([A-Za-z]{3,12}),? ?(\d{1,2})/);
+		if (!match) return null;
+		const date = new Date(match[2] + match[1] + '2000');
+		const month = date.getMonth() + 1;
+		if (!month) return null;
+		const day = trimLeadingZero(match[2]);
+		const year = null;
+		return [`${month}-${day}`, year];
+	},
+	(clue) => {
+		// 21st of July, 9th august, 9 august, 5Nov
+		const match = clue.match(/(\d{1,2})(?:[A-Za-z]{2} )* ?([A-Za-z]{3,12})/);
+		if (!match) return null;
+		const date = new Date(match[1] + match[2] + '2000');
+		const month = date.getMonth() + 1;
+		if (!month) return null;
+		const day = trimLeadingZero(match[1]);
+		const year = null;
+		return [`${month}-${day}`, year];
+	},
+	(clue) => {
+		// 10/10
+		const match = clue.match(/(\d{1,2})[-\/\.](\d{1,2})/);
+		console.log(match)
+		if (!match) return null;
+		const month = trimLeadingZero(match[1]);
+		const day = trimLeadingZero(match[2]);
+		const year = null;
 		return [`${month}-${day}`, year];
 	},
 ];
