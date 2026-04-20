@@ -182,7 +182,7 @@ const detectors = [
 	(clue) => {
 		// 10/10
 		const match = clue.match(/(\d{1,2})[-\/\.](\d{1,2})/);
-		console.log(match)
+		// console.log(match)
 		if (!match) return null;
 		const month = trimLeadingZero(match[1]);
 		const day = trimLeadingZero(match[2]);
@@ -238,54 +238,4 @@ function buildDates() {
 		}
 	}
 	return dates;
-}
-
-
-
-
-
-
-/**
- * Retired Function
- * blocksToYear: (Array<Block>, Object) -> Object
- */
-function blocksToYear(blocks, year) {
-    if (!blocks) return year;
-
-	for (const block of blocks) {
-        // Skip this block if we already have it
-        if (year.info.blockIds.has(block.id)) continue;
-
-        // The places to look for a date
-		const clues = [
-			block.title,
-			block.content,
-			block.connected_at,
-			block.created_at,
-		];
-		const [blockDate, blockYear] = detectDate(clues);
-		block.fullyear = blockYear;
-
-		const day = year.days.get(blockDate);
-		/**
-		 * days: Map[
-		 *          '1-22' -> [block, block],
-		 *          '1-23' -> [block]
-		 *           ...
-		 *       ]
-		 */
-		if (day) day.push(block);
-		else year.days.set(blockDate, [block]);
-
-		/**
-		 * info: {
-		 *          blockIds: Set[id, id, id],
-		 *          yearsRepresented: Set[year, year],
-		 *       }
-		 */
-		year.info.blockIds.add(block.id);
-		year.info.yearsRepresented.add(blockYear);
-	}
-
-	return year;
 }
