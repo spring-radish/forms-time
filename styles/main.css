@@ -270,14 +270,14 @@ h1 {
 .channel { --color: #68c668 } 
 .image { --color: #a745e0 }
 .link { --color: #a7be34 }
-.media { --color: #5f9ed6 }
+.embed { --color: #5f9ed6 }
 
 article {
 
 }
 
 body:has([value="years"]:checked) {
-  .year-2011 { --color: #48921f }
+/*  .year-2011 { --color: #48921f }
   .year-2012 { --color: #31A53F }
   .year-2013 { --color: #38AB6D }
   .year-2014 { --color: #41B19A }
@@ -291,7 +291,7 @@ body:has([value="years"]:checked) {
   .year-2022 { --color: #DF67AF }
   .year-2023 { --color: #E5698B }
   .year-2024 { --color: #EA6F6A }
-  .year-2025 { --color: #e37851 }
+  .year-2025 { --color: #e37851 }*/
 
 }
 /*.text { --color: #7373d1 }*/
@@ -349,7 +349,7 @@ body:has([value="years"]:checked) {
     gap: 6px;
     overflow-x: scroll;
 
-    &.image, &.attachment {
+    &:has(img) {
       justify-content: space-between;
     }
 
