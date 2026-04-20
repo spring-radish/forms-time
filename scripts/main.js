@@ -126,6 +126,8 @@ function updateYears(days) {
         .map((y) => `<li class='year-${y}'>${y}</li>`)
         .join(" ");
     yearsLegend.innerHTML = yearsList
+
+    yearsRepresented.forEach(year => makeColor(year))
 }
 
 function scaleGrid() {
@@ -217,4 +219,27 @@ function fillFields() {
  * Unimplemented function to programatically
  * generate a color scale for yearsLegend
  */
-function makeColor(year) {}
+function makeColor(year) {
+    function yearHasColor(year) {
+        const rules = document.styleSheets[0].cssRules
+        for (const rule of rules) {
+            if (!rule.selectorText) continue;
+            if (rule.selectorText.endsWith(`.year-${year}`)) return true;
+        }
+        return false;
+    }
+
+    function addColor(year) {
+        const l = Math.sin(year / 83) * 7 + 60;
+        const c = Math.sin(year / 71) * 5 + 35;
+        const h = year * 19 % 360;
+        const color = `oklch(${l.toPrecision(3)}% ${c.toPrecision(3)}% ${h.toPrecision(3)}deg)`;
+
+        const rule = `body:has([value="years"]:checked) .year-${year} {--color: ${color};}`
+
+        document.styleSheets[0].insertRule(rule)
+    }
+
+    if (yearHasColor(year)) return;
+    addColor(year);
+}
