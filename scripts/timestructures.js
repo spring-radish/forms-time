@@ -31,7 +31,7 @@ export function blocksNewYear(blocks, blockIds) {
 			block.created_at,
 		];
 		const [blockDate, blockYear] = detectDate(clues);
-		block.fullyear = blockYear || new Date(block.created_at).getFullYear();
+		block.fullyear = Number(blockYear || new Date(block.created_at).getFullYear());
 		// console.log(block.content, 'returned', blockDate)
 
 		const day = newDays.get(blockDate);
