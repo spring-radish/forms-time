@@ -14,7 +14,6 @@ export async function dispatchUrl(input) {
 		.filter((s) => s.length) // -> ["elliott-cost", "model-sites", "table"]
 		.filter((s) => !viewRoutes.includes(s)); // -> ["elliott-cost", "model-sites"]
 
-	console.log(path);
 	const slug = path.at(-1);
 
 	if (path[0] === "block") return requestBlock();
@@ -40,15 +39,13 @@ function requestEmpty() {
 async function requestChannel(slug) {
 	const sendChannelRequest = async function (slug, page = 1) {
 		const url =
-			"https://api.are.na/v2/channels/" +
+			"https://api.are.na/v3/channels/" +
 			slug +
 			"/contents" +
 			"?per=" +
 			100 +
 			"&page=" +
-			page +
-			"&sort=position" +
-			"&direction=desc";
+			page;
 
 		console.log("requesting page", page, "of", url);
 
@@ -56,24 +53,22 @@ async function requestChannel(slug) {
 		if (!response.ok) throw new Error(`http error: ${response.status}`);
 
 		const channel = await response.json();
-		return channel.contents;
+		return channel;
 	};
 
 	try {
-		const slugHistory = requestHistory.channels.get(slug) || [];
+		const slugHistory = requestHistory.channels.get(slug);
 		const page = pickPage(slugHistory);
 		const response = await sendChannelRequest(slug, page);
 
 		console.log(response);
-		const latestHistory =
-			response.length === 100 ? { page: page } : { page: page, status: "end" };
 
-		requestHistory.channels.set(slug, [...slugHistory, latestHistory]);
-		console.log(requestHistory);
+		const nextPage = response.meta.next_page;
+		requestHistory.channels.set(slug, nextPage);
 
 		return {
 			message: `added page ${page} of channel ${slug}`,
-			blocks: response,
+			blocks: response.data,
 		};
 	} catch (exception) {
 		return { message: exception.message, blocks: null };
@@ -83,15 +78,14 @@ async function requestChannel(slug) {
 async function requestUser(slug) {
 	const sendUserRequest = async function (slug, page = 1) {
 		const url =
-			"https://api.are.na/v2/search/users/" +
+			"https://api.are.na/v3/users/" +
 			slug +
-			"?subject=block" +
-			"&per=" +
+			"/contents" +
+			"?per=" +
 			100 +
+			"&sort=created_at_desc" +
 			"&page=" +
-			page +
-			"&sort=created_at" +
-			"&direction=desc";
+			page;
 
 		console.log("requesting page", page, "of", url);
 
@@ -99,22 +93,21 @@ async function requestUser(slug) {
 		if (!response.ok) throw new Error(`http error: ${response.status}`);
 
 		const user = await response.json();
-		return user.blocks;
+		return user;
 	};
 
 	try {
-		const slugHistory = requestHistory.users.get(slug) || [];
+		const slugHistory = requestHistory.users.get(slug);
 		const page = pickPage(slugHistory);
 		const response = await sendUserRequest(slug, page);
 
-		console.log(response);
-		const latestHistory =
-			response.length > 0 ? { page: page } : { page: page, status: "end" };
+		const nextPage = response.meta.next_page;
+		requestHistory.users.set(slug, nextPage);
 
-		requestHistory.users.set(slug, [...slugHistory, latestHistory]);
-		console.log(requestHistory);
-
-		return { message: `added page ${page} of user ${slug}`, blocks: response };
+		return { 
+			message: `added page ${page} of user ${slug}`, 
+			blocks: response.data,
+		};
 	} catch (exception) {
 		return { message: exception.message, blocks: null };
 	}
@@ -128,14 +121,8 @@ function requestBlock() {
 	};
 }
 
-function pickPage(slugHistory) {
-	if (slugHistory.length === 0) return 1;
-
-	if (slugHistory.some((h) => h.status === "end")) {
-		console.log("no more pages");
-		throw new Error("no more data");
-	}
-
-	const pagesCovered = slugHistory.map((h) => h.page);
-	return Math.max(...pagesCovered) + 1;
+function pickPage(slugNextPage) {
+	if (slugNextPage === undefined) return 1; // haven't yet seen this slug
+	if (slugNextPage === null) throw new Error('no more data'); // no more pages
+	return slugNextPage
 }

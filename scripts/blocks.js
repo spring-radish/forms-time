@@ -1,27 +1,33 @@
 function findTemplate(block) {
-    switch (block.class) {
+    switch (block.type) {
         case 'Text':
-            return `<div class="words">${block.content_html}</div>`
+            return `<div class="words">${block.content.html}</div>`
         case 'Image':
             if (block.image) {
-                return `<img src="${block.image.thumb.url}" alt="${block.generated_title}" loading="lazy">`
+                return `<img src="${block.image.small.src}" alt="${block.title}" loading="lazy">`
             } else {
                 return `<a href="//are.na/block/${block.id}" target="_blank" class="words">
-                ${block.generated_title}
+                ${block.title}
                 </a>`
             }
         case 'Link':
             return `<a href="${block.source.url}" target="_blank" class="words">
                 ${block.title || block.source.title}
                 </a>`
-        case 'Media':
-            return `<a href="${block.source.url}" target="_blank" class="words">
-                ${block.title || block.source.title}
+        case 'Embed':
+            if (block.image) {
+                return `<a href="${block.source.url}" target="_blank">
+                <img src="${block.image.small.src}" alt="${block.title}">
                 </a>`
+            } else {
+                return `<a href="${block.source.url}" target="_blank" class="words">
+                    ${block.title || block.embed.title}
+                    </a>`
+            }
         case 'Attachment':
             if (block.image) {
                 return `<a href="${block.attachment.url}" target="_blank">
-                <img src="${block.image.thumb.url}" alt="${block.generated_title}">
+                <img src="${block.image.small.src}" alt="${block.title}">
                 </a>`
             } else {
                 return `<a href="${block.attachment.url}" target="_blank">
@@ -29,8 +35,8 @@ function findTemplate(block) {
                 </a>`
             }
         case 'Channel':
-            return `<a href="//are.na/${block.user.slug}/${block.slug}" target="_blank" class="words">
-                ${block.title} by ${block.user.full_name}
+            return `<a href="//are.na/${block.owner.slug}/${block.slug}" target="_blank" class="words">
+                ${block.title} by ${block.owner.name}
                 </a>`
         case 'Connection':
             return `<a href=//are.na/block/${block.block_id} target="_blank">
@@ -66,13 +72,13 @@ export function renderDay(blocks, date) {
 
 export function renderPreviewParts(blocks) {
     const parts = blocks.map(block => 
-        `<div class="preview ${block.class.toLowerCase()} year-${block.fullyear}"></div>`)
+        `<div class="preview ${block.type.toLowerCase()} year-${block.fullyear}"></div>`)
     return parts.join('')
 }
 
 export function renderArticleParts(blocks) {
     const parts = blocks.map(block =>
-        `<section class="${block.class.toLowerCase()} year-${block.fullyear}">
+        `<section class="${block.type.toLowerCase()} year-${block.fullyear}">
             <a class="source" href="//are.na/block/${block.id}" target="_blank">${block.fullyear}</a> 
             ${findTemplate(block)}
         </section>`)
